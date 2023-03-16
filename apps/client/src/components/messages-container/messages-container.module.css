@@ -1,0 +1,82 @@
+.container {
+    width: 100%;
+    background-color: grey;
+    height: 88%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* .msgCloud {
+    border-radius: 50px 5px 50px 22px;
+    background: #87e405f5;
+    padding: 20px;
+    /* width: 20%; *\
+    float: right;
+    margin-top: 50px;
+    display: flex;
+    max-width: 50%;
+    min-width: 150px;
+    min-height: 2px;
+    max-height: 200px;
+}  */
+
+.msgCloud {
+    position: relative;
+    display: inline-flex;
+    color: #fff;
+    min-width: 65px;
+    max-width: 70%;
+    /* background-color: #2e7384; */
+    max-height: infinite;
+    background-color: #87e405f5;
+    margin: 30px;
+    padding: 10px;
+    border-radius: 6px;
+    padding-right: 20px;
+    float: right;
+    /* z-index: 1; */
+
+}
+
+.left {
+    float: left;
+}
+
+.msgCloud::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -25px;
+    width: 40px;
+    height: 25px;
+    /* background: radial-gradient(25px at top left, #0000 99%, #2e7384 102%); */
+    background: radial-gradient(25px at bottom right, #0000 99%, #87e405f5 102%);
+    /* z-index: -1; */
+    
+}
+
+.msgCloud.left::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -25px;
+    width: 40px;
+    height: 25px;
+    /* background: radial-gradient(25px at top left, #0000 99%, #2e7384 102%); */
+    background: radial-gradient(25px at bottom left, #0000 99%, #87e405f5 102%);
+
+}
+
+
+.actualMsg{
+    /* display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;  */
+    flex-wrap:wrap;
+    max-width: 100%;
+    /* width: 100%; */
+    overflow-wrap: break-word;
+    
+
+}

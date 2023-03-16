@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+    background: green;
+    height: 100vh;
+    padding: 1rem;
+    overflow: hidden;
+}

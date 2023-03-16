@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+    width: 100%;
+    border: none; 
+}
+
+.empty {
+    display: flex;
+    align-items: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 50%;
+    border: 1px solid #eee;
+    border-top: none;
+    padding-top: 23px;
+    cursor: pointer;
+}
