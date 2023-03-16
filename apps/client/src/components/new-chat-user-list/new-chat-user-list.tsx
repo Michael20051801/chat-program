@@ -2,8 +2,8 @@ import React from 'react';
 import style from './new-chat-user-list.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserToList, RootState } from '../../store';
-import { UserWithKey } from '../../types';
 import { NewChatUser } from '../new-chat-user/new-chat-user';
+import { User } from '../../types';
 
 interface Props {
   onClose: () => void;
@@ -14,23 +14,23 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
   const usersList = useSelector((state: RootState) => state.usersList);
   const dispatch = useDispatch();
 
-  const checkExistingUser = (userToAdd: UserWithKey) => {
-    for (let i = 0; i < usersList.length; i++) {
-      if (userToAdd.key == usersList[i].key) {
-        return alert('This user is already added to the list!');
-      }
+  const onChooseUser = (newUser: User) => {
+    if (usersList.find((user) => user.id === newUser.id)) {
+      return onClose();
     }
-    return dispatch(addUserToList(userToAdd)), onClose();
-    // usersList.map((user) => {
-    //   if (userToAddKey == user.key) {
-    //     return alert("This user is already added to the list!")
-    //   }
-    // })
-    // return (
-    //   dispatch(addUserToList(userToAdd)),
-    //   onClose()
-    // )
+    dispatch(addUserToList(newUser));
+    return onClose();
   };
+
+  // usersList.map((user) => {
+  //   if (userToAddKey == user.key) {
+  //     return alert("This user is already added to the list!")
+  //   }
+  // })
+  // return (
+  //   dispatch(addUserToList(userToAdd)),
+  //   onClose()
+  // )
 
   return users.length == 0 ? (
     <div className={style.empty}>You have no contacts!</div>
@@ -38,14 +38,9 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
     <div className={style.container}>
       {users.map((user, index) => (
         <div
+          key={index}
           className={style.user}
-          onClick={() => {
-            const userWithKey = {
-              user: user,
-              key: index,
-            };
-            checkExistingUser(userWithKey);
-          }}
+          onClick={() => onChooseUser(user)}
         >
           <NewChatUser name={user.name} status={user.status} />
         </div>

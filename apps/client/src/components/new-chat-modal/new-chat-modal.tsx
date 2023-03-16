@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import style from './new-chat-modal.module.css';
 
 import { CSSTransition } from 'react-transition-group';
@@ -22,11 +22,8 @@ export const NewChatModal: React.FC<Props> = ({
       unmountOnExit
       timeout={{ enter: 0, exit: 600 }}
       classNames={{
-        // enterActive: style.MyClassEnterActive,
         enterDone: style.modalEnterDone,
-        // enterDone: style.modalEnterDone .modalContent,
         exitActive: style.modalExit,
-        // exitActive: style.modalExit .modalContent,
       }}
     >
       <div className={style.modal} onClick={onClose}>
@@ -38,9 +35,7 @@ export const NewChatModal: React.FC<Props> = ({
             <h4 className={style.modalTitle}>{title}</h4>
           </div>
 
-          <div className={style.modalBody}>
-            {children}
-          </div>
+          <div className={style.modalBody}>{children}</div>
 
           <div className={style.modalFooter}>
             <button className={style.closeButton} onClick={onClose}>
