@@ -33,14 +33,19 @@
     margin: 30px;
     padding: 10px;
     border-radius: 6px;
-    padding-right: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
     float: right;
+    clear: both;
+
     /* z-index: 1; */
 
 }
 
 .left {
     float: left;
+    
+
 }
 
 .msgCloud::after {
@@ -69,14 +74,29 @@
 }
 
 
-.actualMsg{
+.actualMsg {
     /* display: flex;
     justify-content: flex-start;
     align-items: flex-end;  */
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     max-width: 100%;
     /* width: 100%; */
     overflow-wrap: break-word;
-    
 
+}
+
+.nameDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(240, 240, 240, 0.895);
+    /* padding-top: 2rem; */
+    width: 70%;
+    height: 13%;
+    /* centering the div */
+    
+    margin: 0 auto;
+    /* position: fixed; */
+
+    
 }
