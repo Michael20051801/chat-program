@@ -16,9 +16,9 @@ model User {
   updatedAt DateTime @updatedAt
 
   email       String @unique
+  // phoneNumber String @unique
   hash        String
   userName    String
-  
 
   description String?
 }
