@@ -84,6 +84,9 @@ export class AuthService {
   //   return this.getTokens(userId, user.phoneNumber);
   // }
 
+  // async signupGoogle(): Promise<Tokens> {}
+
+  // async loginGoogle(): Promise<Tokens> {}
   
   async logout(userId: number) {
     await this.prisma.user.updateMany({
@@ -106,7 +109,7 @@ export class AuthService {
         id: userId,
       },
     });
-    if (!user){
+    if (!user || !user.hashedRt){
       throw new ForbiddenException(
         'Access Denied.'
       );

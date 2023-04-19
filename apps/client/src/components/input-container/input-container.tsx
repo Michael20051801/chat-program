@@ -7,44 +7,64 @@ import { saveMessage } from '../../store';
 
 export const InputContainer: React.FC = () => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState('');
+
+  
+  // const [value, setValue] = useState('');
 
   // function save(value:string) {
   //   dispatch(saveMessage(value))
   // }
 
-  const handleClick = () => {
+  const handleClick = (value: string) => {
     // alert(value)
-    if (value != '') {
+    if(value !== "") {
       dispatch(saveMessage(value));
-      setValue('');
+      document.getElementById('input')!.innerText = '';
     }
   };
 
-  const handleChange = (event: ChangeEvent) => {
-    const target = event.target as HTMLInputElement;
-    const newValue = target.value;
-    setValue(newValue);
-  };
+  // const handleChange = (event: ChangeEvent) => {
+  //   const target = event.target as HTMLInputElement;
+  //   const newValue = target.value;
+  //   setValue(newValue);
+  // };
 
-  const handleKeyDown = (event: KeyboardEvent) => {
+  // const handleChange = (event: ChangeEvent) => {
+  //   const target = event.target as HTMLDivElement;
+  //   const newValue = target.value;
+  //   setValue(newValue);
+  // };
+
+  const handleKeyDown = (event: KeyboardEvent, value: string) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleClick();
+      handleClick(value);
     }
   };
 
   return (
     <div className={style.container}>
-      <input
+      {/* <input
+
         className={style.inputField}
         type="text"
         placeholder={'Write something...'}
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-      />
-      <button className={style.sendButton} onClick={handleClick}>
+        
+      /> */}
+      <div
+        id='input'
+        className={style.inputField}
+        
+        placeholder={'Write something...'}
+        contentEditable={true}
+        // onChange={handleChange}
+        onKeyDown={(e) => handleKeyDown(e, document.getElementById('input')!.innerText || '')}
+      >
+      </div>
+      <button className={style.sendButton} onClick={() => handleClick(document.getElementById('input')!.innerText || '')}>
         <PaperPlane className={style.paperPlane} />
       </button>
     </div>

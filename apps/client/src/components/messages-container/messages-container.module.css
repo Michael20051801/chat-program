@@ -4,6 +4,8 @@
     height: 88%;
     overflow-y: auto;
     overflow-x: hidden;
+    z-index: 1;
+    position: relative;
 }
 
 
@@ -26,9 +28,9 @@
     display: inline-flex;
     color: #fff;
     min-width: 65px;
-    max-width: 70%;
+    max-width: 63%;
     /* background-color: #2e7384; */
-    max-height: infinite;
+    /* max-height: infinite; */
     background-color: #87e405f5;
     margin: 30px;
     padding: 10px;
@@ -37,15 +39,12 @@
     padding-left: 15px;
     float: right;
     clear: both;
-
     /* z-index: 1; */
 
 }
 
 .left {
     float: left;
-    
-
 }
 
 .msgCloud::after {
@@ -82,21 +81,7 @@
     max-width: 100%;
     /* width: 100%; */
     overflow-wrap: break-word;
-
-}
-
-.nameDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(240, 240, 240, 0.895);
-    /* padding-top: 2rem; */
-    width: 70%;
-    height: 13%;
-    /* centering the div */
-    
-    margin: 0 auto;
-    /* position: fixed; */
-
+    unicode-bidi: plaintext;
+    text-align: start;
     
 }

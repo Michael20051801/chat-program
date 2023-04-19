@@ -12,6 +12,7 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.12.0",
+    "@react-oauth/google": "^0.10.0",
     "@reduxjs/toolkit": "^1.9.3",
     "argon2": "^0.30.3",
     "axios": "^1.0.0",

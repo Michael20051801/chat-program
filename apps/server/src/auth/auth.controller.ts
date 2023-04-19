@@ -18,16 +18,26 @@ import { GetUser } from './decorator';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('local/signup') // /auth/local/signup
+  @Post('signup/local') // /auth/signup/local
   signupLocal(@Body() dto: SignupDto): Promise<Tokens> {
     return this.authService.signupLocal(dto);
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('local/login') // /auth/local/login
+  @Post('login/local') // /auth/login/local
   loginEmailLocal(@Body() dto: SigninViaEmailDto): Promise<Tokens> {
     return this.authService.loginEmailLocal(dto);
   }
+
+  // @Post('signup/google')
+  // signupGoogle(): Promise<Tokens> {
+  //   return this.authService.signupGoogle();
+  // }
+
+  // @Post('login/google')
+  // loginGoogle(): Promise<Tokens> {
+  //   return this.authService.loginGoogle();
+  // }
 
   // @Post('/local/login/phone')
   // loginPhone(@Body() dto: SigninViaPhoneNumberDto) {
@@ -37,7 +47,7 @@ export class AuthController {
   @UseGuards(JwtAtGuard)
   @HttpCode(HttpStatus.OK)
   @Post('logout')
-  logout(@GetUser('id') userId: number) {
+  logout(@GetUser('sub') userId: number) {
     return this.authService.logout(userId);
   }
 
