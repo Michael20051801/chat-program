@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Message {
+  id       String   @id @default(uuid())
+  sent     DateTime @default(now()) @db.Date
+  recieved Boolean? @db.Boolean
+  seen     Boolean? @db.Boolean
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
