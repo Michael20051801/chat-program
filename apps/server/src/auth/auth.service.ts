@@ -45,7 +45,7 @@ export class AuthService {
     }
   }
 
-  async loginEmailLocal(dto: SigninViaEmailDto) {
+  async loginEmailLocal(dto: SigninViaEmailDto): Promise<Tokens> {
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
@@ -84,9 +84,21 @@ export class AuthService {
   //   return this.getTokens(userId, user.phoneNumber);
   // }
 
-  // async signupGoogle(): Promise<Tokens> {}
+  // async signupGoogle() {
+    
+  // }
 
-  // async loginGoogle(): Promise<Tokens> {}
+  // async loginGoogle() {
+  //   return {
+  //     msg: 'Success!'
+  //   }
+  // }
+
+  // async googleRedirect() {
+  //   return {
+  //     msg: 'Success!'
+  //   }
+  // }
   
   async logout(userId: number) {
     await this.prisma.user.updateMany({

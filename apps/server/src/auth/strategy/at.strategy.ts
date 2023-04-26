@@ -23,6 +23,8 @@ export class AtStrategy extends PassportStrategy(Strategy, 'jwt') {
   //   return user;
   // }
   async validate(payload: any) {
-    return payload;
+    return {
+      ...payload,
+    }
   }
 }

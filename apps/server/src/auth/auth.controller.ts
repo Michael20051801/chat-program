@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -10,8 +11,8 @@ import {
 import { AuthService } from './auth.service';
 import { SigninViaEmailDto, SigninViaPhoneNumberDto, SignupDto } from './dto';
 import { Tokens } from './types';
-import { Request } from 'express';
-import { JwtAtGuard, JwtRtGuard } from './guard';
+import { Request, request } from 'express';
+import { GoogleGuard, JwtAtGuard, JwtRtGuard } from './guard';
 import { GetUser } from './decorator';
 
 @Controller('auth')
@@ -33,28 +34,40 @@ export class AuthController {
   // signupGoogle(): Promise<Tokens> {
   //   return this.authService.signupGoogle();
   // }
+  // @UseGuards(GoogleGuard)
+  // @Get('signup/google')
+  // signupGoogle() {
+  //   return this.authService.signupGoogle();
+  // }
 
-  // @Post('login/google')
-  // loginGoogle(): Promise<Tokens> {
+  // @UseGuards(GoogleGuard)
+  // @Get('login/google')
+  // loginGoogle() {
   //   return this.authService.loginGoogle();
   // }
 
-  // @Post('/local/login/phone')
-  // loginPhone(@Body() dto: SigninViaPhoneNumberDto) {
-  //   return this.authService.loginPhone(dto);
+  // @UseGuards(GoogleGuard)
+  // @Get('/google/redirect')
+  // googleRedirect() {
+  //   return this.authService.googleRedirect();
   // }
+
+  
 
   @UseGuards(JwtAtGuard)
   @HttpCode(HttpStatus.OK)
   @Post('logout')
-  logout(@GetUser('sub') userId: number) {
+  logout(@GetUser('sub') userId: number): Promise<void> {
     return this.authService.logout(userId);
   }
 
   @UseGuards(JwtRtGuard)
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
-  refreshTokens(@GetUser('sub') userId: number, @GetUser('refreshToken') refreshToken: string) {
+  refreshTokens(
+    @GetUser('sub') userId: number,
+    @GetUser('refreshToken') refreshToken: string
+  ): Promise<Tokens> {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 }

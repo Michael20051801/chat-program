@@ -10,25 +10,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @db.Date
+  updatedAt DateTime @updatedAt @db.Date
+
+  email    String @unique @db.Text
+  // phoneNumber String @unique
+  hash     String @db.Text
+  userName String @db.Text
+
+  description String?   @db.Text
+  hashedRt    String?   @db.Text
+  
+  Message     Message[]
+
+  @@map("users")
+}
+
 model Message {
   id       String   @id @default(uuid())
   sent     DateTime @default(now()) @db.Date
   recieved Boolean? @db.Boolean
   seen     Boolean? @db.Boolean
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
-model User {
+model GoogleUser {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   email    String @unique
   // phoneNumber String @unique
-  hash     String
   userName String
 
   description String?
   hashedRt    String?
 
-  @@map("users")
+  @@map("googleusers")
 }
