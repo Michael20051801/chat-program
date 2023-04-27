@@ -1,6 +1,6 @@
 import {
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -17,7 +17,7 @@ export class MessageDto {
   message: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   sent: Date;
 
   @IsOptional()

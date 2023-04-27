@@ -7,8 +7,10 @@ export class MessageService {
   constructor(private prismaService: PrismaService) {}
 
   postMessage(body: CreateMessageDto) {
-    return this.prismaService.message.create({
-      data: body,
-    });
+    return body;
+
+    // return this.prismaService.message.create({
+    //   data: body,
+    // });
   }
 }
