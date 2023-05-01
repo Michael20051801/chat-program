@@ -14,7 +14,7 @@ export class MessageDto {
 
   @IsNotEmpty()
   @IsString()
-  message: string;
+  content: string;
 
   @IsNotEmpty()
   @IsDateString()

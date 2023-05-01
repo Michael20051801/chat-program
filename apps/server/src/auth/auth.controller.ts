@@ -57,7 +57,7 @@ export class AuthController {
   @UseGuards(JwtAtGuard)
   @HttpCode(HttpStatus.OK)
   @Post('logout')
-  logout(@GetUser('sub') userId: number): Promise<void> {
+  logout(@GetUser('sub') userId: string): Promise<void> {
     return this.authService.logout(userId);
   }
 
@@ -65,7 +65,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
   refreshTokens(
-    @GetUser('sub') userId: number,
+    @GetUser('sub') userId: string,
     @GetUser('refreshToken') refreshToken: string
   ): Promise<Tokens> {
     return this.authService.refreshTokens(userId, refreshToken);

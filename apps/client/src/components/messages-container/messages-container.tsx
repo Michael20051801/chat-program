@@ -22,11 +22,13 @@ export const MessagesContainer: React.FC<Props> = ({ message }: Props) => {
     <div className={style.container}>
       <NameBar/>
       
-      {messageList.map((msg, index) => (
+
+
+      {/* {messageList.map((msg, index) => (
         <div className={style.msgCloud} key={index} ref={divRef}>
           <div className={style.actualMsg}>{msg}</div>
         </div>
-      ))}
+      ))} */}
       
       
       {/* <div className={`${style.msgCloud} ${style.left}`}>

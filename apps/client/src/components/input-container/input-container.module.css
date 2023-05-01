@@ -48,11 +48,9 @@
 }
 
 /* placeholder */
-.inputField:empty::before {
-    content: attr(placeholder);
+.inputField::placeholder {
     color: rgb(182, 182, 182);
     font-size: medium;
-    cursor: text;
 }
 
 

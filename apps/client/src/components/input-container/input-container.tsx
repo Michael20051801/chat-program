@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { ReactComponent as PaperPlane } from '../../assets/paper-plane.svg';
 import { saveMessage, useSendMessageMutation } from '../../store';
+import { error } from 'console';
 
 export const InputContainer: React.FC = () => {
   const dispatch = useDispatch();
@@ -11,12 +12,18 @@ export const InputContainer: React.FC = () => {
   const [message, setMessage] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value);
+    setMessage(event.target.value); 
   };
 
   const handleClick = () => {
-    sendMessage({ message, sent: new Date().toISOString() });
-    console.log({result, message});
+    try {
+      console.log({ sent: new Date().toISOString() });
+      sendMessage({ message });
+      setMessage('');
+    } catch {
+      throw new Error('Try Again!');
+    }
+    console.log({ result, message });
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
