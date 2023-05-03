@@ -1,7 +1,8 @@
 .container {
     display: flex;
-    background: green;
+    background: rgba(12,29,54,255);
     height: 100vh;
     padding: 1rem;
     overflow: hidden;
+    justify-content: center;
 }

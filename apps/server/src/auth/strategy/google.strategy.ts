@@ -17,14 +17,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
 
   validate(access_token: string, refresh_token: string, profile: Profile) {
     console.log({
-        access_token,
-        refresh_token,
-        profile,
-        email: profile.emails[0].value,
-        userName: profile.displayName,
+      access_token,
+      refresh_token,
+      profile,
+      email: profile.emails[0].value,
+      userName: profile.displayName,
     });
     return {
       profile,
-    }
+    };
   }
 }

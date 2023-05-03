@@ -36,21 +36,27 @@ export class AuthController {
   // }
   // @UseGuards(GoogleGuard)
   // @Get('signup/google')
-  // signupGoogle() {
-  //   return this.authService.signupGoogle();
+  // signupGoogle(@GetUser('profile') profile: object) {
+  //   return this.authService.signupGoogle(profile);
   // }
 
   // @UseGuards(GoogleGuard)
   // @Get('login/google')
-  // loginGoogle() {
-  //   return this.authService.loginGoogle();
+  // loginGoogle(@GetUser('profile') profile: object) {
+  //   return this.authService.loginGoogle(profile);
   // }
+
+  @Post('login/google')
+  loginGoogle(@Body() code: string) {
+    return this.authService.loginGoogle(code);
+  }
 
   // @UseGuards(GoogleGuard)
   // @Get('/google/redirect')
   // googleRedirect() {
   //   return this.authService.googleRedirect();
   // }
+
 
   
 

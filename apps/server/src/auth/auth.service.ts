@@ -4,10 +4,12 @@ import { SigninViaEmailDto, SigninViaPhoneNumberDto, SignupDto } from './dto';
 import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { Tokens } from './types';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAtGuard, JwtRtGuard } from './guard';
+import axios from 'axios';
+import { OAuth2Client, UserRefreshClient } from 'google-auth-library';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +19,7 @@ export class AuthService {
     private config: ConfigService
   ) {}
 
+  
   async signupLocal(dto: SignupDto): Promise<Tokens> {
     const hash = await argon.hash(dto.password);
 
@@ -84,21 +87,23 @@ export class AuthService {
   //   return this.getTokens(userId, user.phoneNumber);
   // }
 
-  // async signupGoogle() {
-    
-  // }
+  async signupGoogle(profile: object) {
+    return {
+      msg: 'Success!'
+    }
+  }
 
-  // async loginGoogle() {
-  //   return {
-  //     msg: 'Success!'
-  //   }
-  // }
+  async loginGoogle(code: string) {
+    return {
+      msg: 'Success!'
+    }
+  }
 
-  // async googleRedirect() {
-  //   return {
-  //     msg: 'Success!'
-  //   }
-  // }
+  async googleRedirect() {
+    return {
+      msg: 'Success!'
+    }
+  }
   
   async logout(userId: string) {
     await this.prisma.user.updateMany({

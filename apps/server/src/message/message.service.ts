@@ -17,10 +17,19 @@ export class MessageService {
         },
       });
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
     return body;
   }
 
-  
+  async getMessages(userId: string) {
+    const user = this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) throw new ForbiddenException('The user does not exist');
+
+    return user.Message;
+  }
 }

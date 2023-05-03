@@ -12,4 +12,9 @@ export class MessageController {
   postMessage(@GetUser('sub') userId: string, @Body() body: CreateMessageDto) {
     return this.messageService.postMessage(userId, body);
   }
+
+  @Get()
+  getMessages(@GetUser('sub') userId: string) {
+    return this.messageService.getMessages(userId);
+  }
 }

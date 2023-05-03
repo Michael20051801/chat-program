@@ -1,8 +1,8 @@
 import { serverApi } from './serverApi';
 
-const showMessageApi = serverApi.injectEndpoints({
+const getMessagesApi = serverApi.injectEndpoints({
   endpoints: (build) => ({
-    showMessage: build.query({
+    getMessages: build.query({
       query: (body) => ({ url: 'message', method: 'GET', body }),
       
     }),
@@ -10,4 +10,4 @@ const showMessageApi = serverApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useShowMessageQuery } = showMessageApi;
+export const { useGetMessagesQuery } = getMessagesApi;

@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState, useGetMessagesQuery } from '../../store';
 import style from './messages-container.module.css';
 import { NameBar } from '../name-bar';
 
@@ -10,6 +10,7 @@ interface Props {
 
 export const MessagesContainer: React.FC<Props> = ({ message }: Props) => {
   const messageList = useSelector((state: RootState) => state.messages);
+  // const {data} = useGetMessagesQuery();
 
   const divRef = useRef<null | HTMLDivElement>(null)
 
