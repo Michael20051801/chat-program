@@ -1,16 +1,16 @@
 import { useDispatch } from 'react-redux';
 import { addUser } from '../store';
-import { User } from '../types';
+import { Person } from '../types';
 
 const dispatch = useDispatch();
 
-const usersArray: User[] = [
+const usersArray: Person[] = [
     { name: 'Michael', status: `I'm doing a project`, id: "1"}, 
     { name: 'Daniel',  status: `At the beach`, id: "2"}
 ]
 
-usersArray.map((user, index) => (
-    dispatch(addUser(user))
+usersArray.map((person, index) => (
+    dispatch(addUser(person))
 ))
 
 //need help with that

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { usersListReducer, usersReducer, messagesReducer } from './slices';
+import { usersListReducer, usersReducer, messagesReducer, setLoggedInReducer, saveUserReducer } from './slices';
 import { serverApi } from './services';
 
 export const store = configureStore({
@@ -7,6 +7,8 @@ export const store = configureStore({
     users: usersReducer,
     usersList: usersListReducer,
     messages: messagesReducer,
+    setLoggedIn: setLoggedInReducer,
+    saveUser: saveUserReducer,
     [serverApi.reducerPath]: serverApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -2,12 +2,12 @@ import { serverApi } from './serverApi';
 
 const getMessagesApi = serverApi.injectEndpoints({
   endpoints: (build) => ({
-    getMessages: build.query({
-      query: (body) => ({ url: 'message', method: 'GET', body }),
+    getMessages: build.mutation({
+      query: (body) => ({ url: 'message', method: 'POST', body }),
       
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetMessagesQuery } = getMessagesApi;
+export const { useGetMessagesMutation } = getMessagesApi;

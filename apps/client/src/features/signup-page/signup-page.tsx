@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import style from './login-page.module.css';
-import { saveUser, setLoggedIn, useLoginMutation } from '../../store';
+import style from './signup-page.module.css';
+import {
+  saveUser,
+  setLoggedIn,
+  useSignupMutation,
+} from '../../store';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export const LoginPage: React.FC = () => {
+export const SignupPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [login] = useLoginMutation();
+  const [userName, setUserName] = useState('');
+  const [signup] = useSignupMutation();
   const dispatch = useDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -15,15 +20,21 @@ export const LoginPage: React.FC = () => {
     const data = {
       email,
       password,
+      userName,
     };
 
-    login(data)
+    signup(data)
       .unwrap()
       .then((res) => {
+        // const at = 'access_token'
+        // console.log(res[at])
         console.log(res);
+        dispatch(
+          saveUser({
+            ...data,
+          })
+        );
         dispatch(setLoggedIn(true));
-        // localStorage.setItem('access_token', res.data.access_token)
-        // localStorage.setItem('refresh_token', res.data.refresh_token)
       })
       .catch((err) => {
         console.log(err);
@@ -33,9 +44,9 @@ export const LoginPage: React.FC = () => {
   return (
     <div className={style.container}>
       <span className={style.link}>
-        Don't have an account?{' '}
-        <Link className={style.u} to={'/signup'}>
-          Sign Up
+        Have an account?{' '}
+        <Link className={style.u} to={'/login'}>
+          Log In
         </Link>
       </span>
       <div className={style.wrapper}>
@@ -65,7 +76,22 @@ export const LoginPage: React.FC = () => {
             }}
           />
 
-          <input type="submit" className={style.loginSubmit} value="Continue" />
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            placeholder="Enter user name"
+            required
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
+
+          <input
+            type="submit"
+            className={style.signupSubmit}
+            value="Continue"
+          />
         </form>
       </div>
     </div>

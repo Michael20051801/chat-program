@@ -3,7 +3,7 @@ import style from './new-chat-user-list.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserToList, RootState } from '../../store';
 import { NewChatUser } from '../new-chat-user/new-chat-user';
-import { User } from '../../types';
+import { Person } from '../../types';
 
 interface Props {
   onClose: () => void;
@@ -14,7 +14,7 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
   const usersList = useSelector((state: RootState) => state.usersList);
   const dispatch = useDispatch();
 
-  const onChooseUser = (newUser: User) => {
+  const onChooseUser = (newUser: Person) => {
     if (usersList.find((user) => user.id === newUser.id)) {
       return onClose();
     }

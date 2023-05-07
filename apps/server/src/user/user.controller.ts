@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
@@ -10,9 +10,9 @@ import { EditUserDto } from './dto';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get('me')
-  getMe(@GetUser() user: User) {
-    return user;
+  @Post('me')
+  getMeByEmail(userEmail: string) {
+    return this.userService.getMyIdByEmail(userEmail);
   }
 
   @Patch()

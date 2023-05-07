@@ -13,7 +13,7 @@ export class MessageController {
     return this.messageService.postMessage(userId, body);
   }
 
-  @Get()
+  @Post()
   getMessages(@GetUser('sub') userId: string) {
     return this.messageService.getMessages(userId);
   }

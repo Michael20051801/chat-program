@@ -33,24 +33,27 @@
     padding-bottom: 100%;
 }
 
-.inputField{
+.inputField {
     display: flex;
     align-items: center;
-    
+    /* align-self: center; */
     background-color: #FFFFFF;
     height: 85%;
+    max-height: 100%;
     width: 100%;
     padding: 1rem;
     font-size: large;
     unicode-bidi: plaintext;
     text-align: start;
     overflow: hidden;
+    /* padding-bottom: 40px; */
 }
 
 /* placeholder */
 .inputField::placeholder {
     color: rgb(182, 182, 182);
     font-size: medium;
+    font-weight: 600;
 }
 
 

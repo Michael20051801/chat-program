@@ -9,21 +9,28 @@ import { error } from 'console';
 export const InputContainer: React.FC = () => {
   const dispatch = useDispatch();
   const [sendMessage, result] = useSendMessageMutation();
-  const [message, setMessage] = useState('');
+  const [content, setContent] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value); 
+    setContent(event.target.value);
   };
 
   const handleClick = () => {
     try {
       console.log({ sent: new Date().toISOString() });
-      sendMessage({ message });
-      setMessage('');
+      sendMessage({ content })
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setContent('');
     } catch {
       throw new Error('Try Again!');
     }
-    console.log({ result, message });
+    console.log({ result, content });
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -39,7 +46,7 @@ export const InputContainer: React.FC = () => {
         className={style.inputField}
         type="text"
         placeholder={'Write something...'}
-        value={message}
+        value={content}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />

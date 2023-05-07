@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../types';
+import { Person } from '../../types';
 
-const initialState: User[] = [
+const initialState: Person[] = [
   { name: 'Michael', status: `I'm doing a project`, id: '1' },
   { name: 'Daniel', status: 'At the beach', id: '2' },
 ];
@@ -10,7 +10,7 @@ const usersSlice = createSlice({
   name: 'usersSlice',
   initialState: initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<User>) => {
+    addUser: (state, action: PayloadAction<Person>) => {
       // state.map((user) => (
 
       // ))
