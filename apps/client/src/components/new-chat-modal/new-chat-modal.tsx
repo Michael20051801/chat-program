@@ -10,6 +10,8 @@ interface Props {
   children?: React.ReactNode;
 }
 
+// Created an functional component with the name of NewChatModal
+// It is getting some props (properties) from PeopleContainer component
 export const NewChatModal: React.FC<Props> = ({
   showProp,
   onClose,

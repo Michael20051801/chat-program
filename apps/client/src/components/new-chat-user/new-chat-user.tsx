@@ -4,11 +4,13 @@ import style from './new-chat-user.module.css';
 import { ReactComponent as ProfilePic } from '../../assets/default-user.svg';
 
 interface Props {
-  status: string;
+  description: string;
   name: string;
 }
 
-export const NewChatUser: React.FC<Props> = ({ status, name }: Props) => {
+// Created an functional component with the name of NewChatUser
+// It is getting props from PeopleContainer or NewChatUserList components
+export const NewChatUser: React.FC<Props> = ({ description, name }: Props) => {
   // const handleClick = () => {
   //   return openChat;
   // }
@@ -20,7 +22,7 @@ export const NewChatUser: React.FC<Props> = ({ status, name }: Props) => {
       </div>
       <div>
         <div className={style.title}>{name}</div>
-        <div className={style.statusMsg}>{status}</div>
+        <div className={style.description}>{description}</div>
       </div>
     </div>
   );

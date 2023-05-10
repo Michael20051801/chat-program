@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+// Created an functional component with the name of SignupPage
 export const SignupPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

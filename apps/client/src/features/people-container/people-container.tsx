@@ -2,21 +2,39 @@ import React, { useState } from 'react';
 import style from './people-container.module.css';
 
 import { ReactComponent as NewChatIcon } from '../../assets/whatsapp-new-chat.svg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, goToPrivateChat } from '../../store';
 import { NewChatModal, NewChatUser, NewChatUserList } from '../../components';
+import { Person } from '../../types';
 
+// Created an functional component with the name of PeopleContainer
 export const PeopleContainer: React.FC = () => {
   const [show, setShow] = useState(false);
   const usersList = useSelector((state: RootState) => state.usersList);
+  const dispatch = useDispatch();
+
+  const handleClick = (person: Person) => {
+    dispatch(
+      goToPrivateChat({
+        id: person.id,
+        name: person.name,
+        description: person.description,
+      })
+    );
+
+  };
 
   return (
     <div className={style.container}>
       <div className={style.peopleContainer}>
         {/* This is the list where the clicked users will show */}
         {usersList.map((user, index) => (
-          <div className={style.userChat} key={index}>
-            <NewChatUser name={user.name} status={user.status} />
+          <div
+            className={style.userChat}
+            key={index}
+            onClick={() => handleClick(user)}
+          >
+            <NewChatUser name={user.name} description={user.description} />
           </div>
         ))}
       </div>

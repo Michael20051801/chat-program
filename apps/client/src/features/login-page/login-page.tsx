@@ -4,6 +4,7 @@ import { saveUser, setLoggedIn, useLoginMutation } from '../../store';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+// Created an functional component with the name of LoginPage
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

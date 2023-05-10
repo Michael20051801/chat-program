@@ -1,3 +1,4 @@
+/* General design of the outest container*/
 .container {
     display: flex;
     background: rgba(12,29,54,255);

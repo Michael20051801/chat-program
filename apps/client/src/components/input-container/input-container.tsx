@@ -6,6 +6,7 @@ import { ReactComponent as PaperPlane } from '../../assets/paper-plane.svg';
 import { saveMessage, useSendMessageMutation } from '../../store';
 import { error } from 'console';
 
+// Created an functional component with the name of InputContainer
 export const InputContainer: React.FC = () => {
   const dispatch = useDispatch();
   const [sendMessage, result] = useSendMessageMutation();

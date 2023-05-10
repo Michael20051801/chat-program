@@ -8,6 +8,7 @@ import { HomePage } from '../features';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
+// Created an functional component with the name of App
 export const App: React.FC = () => {
   const user = useSelector((state: RootState) => state.setLoggedIn);
   return (

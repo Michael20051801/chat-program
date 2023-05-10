@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './new-chat-user-list.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserToList, RootState } from '../../store';
+import { addUserToList, goToPrivateChat, RootState } from '../../store';
 import { NewChatUser } from '../new-chat-user/new-chat-user';
 import { Person } from '../../types';
 
@@ -9,6 +9,8 @@ interface Props {
   onClose: () => void;
 }
 
+// Created an functional component with the name of NewChatUserList
+// It is getting props from people component
 export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
   const users = useSelector((state: RootState) => state.users);
   const usersList = useSelector((state: RootState) => state.usersList);
@@ -19,6 +21,11 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
       return onClose();
     }
     dispatch(addUserToList(newUser));
+    dispatch(goToPrivateChat({
+      id: newUser.id,
+      name: newUser.name,
+      description: newUser.description,
+    }))
     return onClose();
   };
 
@@ -42,7 +49,7 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
           className={style.user}
           onClick={() => onChooseUser(user)}
         >
-          <NewChatUser name={user.name} status={user.status} />
+          <NewChatUser name={user.name} description={user.description} />
         </div>
       ))}
     </div>

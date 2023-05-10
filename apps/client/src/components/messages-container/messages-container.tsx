@@ -8,15 +8,24 @@ import {
 import style from './messages-container.module.css';
 import { NameBar } from '../name-bar';
 
-interface Props {
-  message?: string;
-}
-
-export const MessagesContainer: React.FC<Props> = ({ message }: Props) => {
+// Created an functional component with the name of MessageContainer
+export const MessagesContainer: React.FC = () => {
   const messageList = useSelector((state: RootState) => state.messages);
   const user = useSelector((state: RootState) => state.saveUser);
   console.log(user);
-  // const [findUserId] = useGetUserIdMutation();
+  const [findUserId] = useGetUserIdMutation();
+  const email: string = user.email;
+  useEffect(() => {
+    findUserId(email)
+      .unwrap()
+      .then((res) => {
+        console.log({res});
+      })
+      .catch((err) => {
+        console.log({err});
+      });
+  }, [user]);
+
   // findUserId(user.email);
   // console.log(userId);
   // const [messages] = useGetMessagesMutation(userId);

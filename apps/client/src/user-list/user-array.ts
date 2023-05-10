@@ -5,8 +5,8 @@ import { Person } from '../types';
 const dispatch = useDispatch();
 
 const usersArray: Person[] = [
-    { name: 'Michael', status: `I'm doing a project`, id: "1"}, 
-    { name: 'Daniel',  status: `At the beach`, id: "2"}
+    { name: 'Michael', description: `I'm doing a project`, id: "1"}, 
+    { name: 'Daniel',  description: `At the beach`, id: "2"}
 ]
 
 usersArray.map((person, index) => (
