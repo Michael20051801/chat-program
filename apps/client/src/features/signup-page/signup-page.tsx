@@ -27,8 +27,6 @@ export const SignupPage: React.FC = () => {
     signup(data)
       .unwrap()
       .then((res) => {
-        // const at = 'access_token'
-        // console.log(res[at])
         console.log(res);
         dispatch(
           saveUser({

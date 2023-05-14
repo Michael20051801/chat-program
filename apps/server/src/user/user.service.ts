@@ -6,10 +6,10 @@ import { EditUserDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getMyIdByEmail(userEmail: string) {
+  async getUserIdByEmail(body: { userEmail: string }) {
     const user = await this.prisma.user.findFirst({
       where: {
-        email: userEmail,
+        email: body.userEmail,
       },
     });
     if (!user)
@@ -30,5 +30,55 @@ export class UserService {
     delete user.hash;
 
     return user;
+  }
+
+  async getContacts() {
+    const users = await this.prisma.user.findMany({
+      include: {
+        receivedMessages: { include: { sender: { select: { id: true, email: true } } } },
+        sentMessages: { include: { receiver: { select: { id: true, email: true } } } },
+      },
+    });
+    return users;
+    // const users = await this.prisma.user.findMany({
+    //   include: {
+    //     receivedMessages: {
+    //       // where: {
+    //       //   receiverId: body.userId,
+    //       // },
+    //       include: {
+    //         sender: {
+    //           select: {
+    //             id: true,
+    //           },
+    //         },
+    //       },
+    //     },
+    //     sentMessages: {
+    //       // where: {
+    //       //   senderId: body.userId,
+    //       // },
+    //       include: {
+    //         receiver: {
+    //           select: {
+    //             id: true,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // });
+    // return users;
+  }
+
+  async getAllUsers(body: {userId: string}) {
+    const allUsers = await this.prisma.user.findMany({
+      where: {
+        NOT: {
+          id: body.userId,
+        },
+      },
+    });
+    return allUsers;
   }
 }

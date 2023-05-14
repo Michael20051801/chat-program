@@ -23,8 +23,6 @@ export const LoginPage: React.FC = () => {
       .then((res) => {
         console.log(res);
         dispatch(setLoggedIn(true));
-        // localStorage.setItem('access_token', res.data.access_token)
-        // localStorage.setItem('refresh_token', res.data.refresh_token)
       })
       .catch((err) => {
         console.log(err);

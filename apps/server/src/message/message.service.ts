@@ -12,7 +12,7 @@ export class MessageService {
     try {
       await this.prisma.message.create({
         data: {
-          userId,
+          senderId: userId,
           ...body,
         },
       });
@@ -22,14 +22,34 @@ export class MessageService {
     return body;
   }
 
-  async getMessages(userId: string) {
-    const user = this.prisma.user.findFirst({
+  async getMessages(userId: string, body: { otherUserId: string }) {
+    const receivedMessages = this.prisma.message.findMany({
       where: {
-        id: userId,
-      },
-    });
-    if (!user) throw new ForbiddenException('The user does not exist');
+        senderId: body.otherUserId,
+        receiverId: userId,
+      }
+    })
 
-    return user.Message;
+    const sentMessages = this.prisma.message.findMany({
+      where: {
+        senderId: userId,
+        receiverId: body.otherUserId,
+      }
+    })
+    
+    // const sender = this.prisma.user.findUnique({
+    //   where: {
+    //     id: senderId,
+    //   },
+    // });
+    // if (!sender) throw new ForbiddenException('The user does not exist');
+    // const sentMessages = this.prisma.user.findMany({
+    //   where: {
+        
+    //   }
+    // })
+    
+
+    return receivedMessages || sentMessages;
   }
 }

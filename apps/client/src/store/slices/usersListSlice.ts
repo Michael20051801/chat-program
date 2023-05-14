@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Person } from '../../types';
+import { Person, PrismaUser } from '../../types';
 
-const initialState: Person[] = [];
+const initialState: PrismaUser[] = [];
 
 const usersListSlice = createSlice({
   name: 'usersListSlice',
   initialState: initialState,
   reducers: {
-    addUserToList: (state, action: PayloadAction<Person>) => {
+    addUserToList: (state, action: PayloadAction<PrismaUser>) => {
       state.push(action.payload);
     },
   },

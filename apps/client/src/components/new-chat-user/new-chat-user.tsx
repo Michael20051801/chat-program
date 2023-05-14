@@ -4,7 +4,7 @@ import style from './new-chat-user.module.css';
 import { ReactComponent as ProfilePic } from '../../assets/default-user.svg';
 
 interface Props {
-  description: string;
+  description?: string;
   name: string;
 }
 

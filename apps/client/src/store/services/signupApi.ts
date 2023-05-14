@@ -1,8 +1,9 @@
 import { serverApi } from './serverApi';
 
 // Created a new endpoint in serverApi whics is called signupApi.
-// It builds a mutation and by activating it, it will go to the specified url,
-//    method and body that it gets from the code in the client components.
+// It builds a mutation and by activating it in the client components, 
+//    it will go to the server's controller that matches the specified 
+//    url and method, with the body that he gets from the client components.
 const signupApi = serverApi.injectEndpoints({
   endpoints: (build) => ({
     signup: build.mutation({

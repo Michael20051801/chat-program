@@ -20,15 +20,17 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup/local') // /auth/signup/local
-  signupLocal(@Body() dto: SignupDto): Promise<Tokens> {
+  signupLocal(@Body() dto: SignupDto) {
     return this.authService.signupLocal(dto);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login/local') // /auth/login/local
-  loginEmailLocal(@Body() dto: SigninViaEmailDto): Promise<Tokens> {
-    return this.authService.loginEmailLocal(dto);
+  loginEmailLocal(@Body() signinViaEmailDto: SigninViaEmailDto) {
+    return this.authService.loginEmailLocal(signinViaEmailDto);
   }
+
+
 
   // @Post('signup/google')
   // signupGoogle(): Promise<Tokens> {
@@ -46,19 +48,16 @@ export class AuthController {
   //   return this.authService.loginGoogle(profile);
   // }
 
-  @Post('login/google')
-  loginGoogle(@Body() code: string) {
-    return this.authService.loginGoogle(code);
-  }
+  // @Post('login/google')
+  // loginGoogle(@Body() code: string) {
+  //   return this.authService.loginGoogle(code);
+  // }
 
   // @UseGuards(GoogleGuard)
   // @Get('/google/redirect')
   // googleRedirect() {
   //   return this.authService.googleRedirect();
   // }
-
-
-  
 
   @UseGuards(JwtAtGuard)
   @HttpCode(HttpStatus.OK)

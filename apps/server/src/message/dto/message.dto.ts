@@ -13,6 +13,10 @@ export class MessageDto {
   id: string;
 
   @IsNotEmpty()
+  @IsUUID()
+  receiverId: string
+
+  @IsNotEmpty()
   @IsString()
   content: string;
 

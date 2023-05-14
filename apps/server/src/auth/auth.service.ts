@@ -19,8 +19,7 @@ export class AuthService {
     private config: ConfigService
   ) {}
 
-  
-  async signupLocal(dto: SignupDto): Promise<Tokens> {
+  async signupLocal(dto: SignupDto){
     const hash = await argon.hash(dto.password);
 
     try {
@@ -30,12 +29,27 @@ export class AuthService {
           hash,
           userName: dto.userName,
         },
+        select: {
+          createdAt: false,
+          updatedAt: false,
+          hashedRt: false,
+          description: true,
+          email: true,
+          id: true,
+          userName: true,
+          hash: true,
+        },
       });
 
       delete user.hash;
+      
       const tokens = await this.getTokens(user.id, user.email); //?
       await this.updateRtHash(user.id, tokens.refresh_token);
-      return tokens;
+      
+      return {
+        user,
+        tokens,
+      };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -48,10 +62,20 @@ export class AuthService {
     }
   }
 
-  async loginEmailLocal(dto: SigninViaEmailDto): Promise<Tokens> {
+  async loginEmailLocal({ email, password }: SigninViaEmailDto) {
     const user = await this.prisma.user.findUnique({
       where: {
-        email: dto.email,
+        email,
+      },
+      select: {
+        createdAt: false,
+        updatedAt: false,
+        hashedRt: false,
+        description: true,
+        email: true,
+        id: true,
+        userName: true,
+        hash: true,
       },
     });
 
@@ -60,51 +84,41 @@ export class AuthService {
         'The given email does not exist in the system.'
       );
 
-    const pwMatches = await argon.verify(user.hash, dto.password);
+    const pwMatches = await argon.verify(user.hash, password);
 
-    if (!pwMatches) throw new ForbiddenException('Incorrect password.');
+    if (!pwMatches) {
+      throw new ForbiddenException('Incorrect password.');
+    }
 
     delete user.hash;
-    const tokens = await this.getTokens(user.id, user.email);
+
+    const tokens = await this.getTokens(user.id, user.email); //?
     await this.updateRtHash(user.id, tokens.refresh_token);
-    return tokens;
+    return {
+      user,
+      tokens,
+    };
   }
 
-  // async loginPhone(dto: SigninViaPhoneNumberDto) {
-  //   const user = await this.prisma.user.findUnique({
-  //     where: {
-  //       email: dto.phoneNumber,
-  //     },
-  //   });
 
-  //   if (!user) throw new ForbiddenException('Credentials are incorrect');
-
-  //   const pwMatches = await argon.verify(user.hash, dto.password);
-
-  //   if (!pwMatches) throw new ForbiddenException('Credentials are incorrect');
-
-  //   delete user.hash;
-  //   return this.getTokens(userId, user.phoneNumber);
+  // async signupGoogle(profile: object) {
+  //   return {
+  //     msg: 'Success!',
+  //   };
   // }
 
-  async signupGoogle(profile: object) {
-    return {
-      msg: 'Success!'
-    }
-  }
+  // async loginGoogle(code: string) {
+  //   return {
+  //     msg: 'Success!',
+  //   };
+  // }
 
-  async loginGoogle(code: string) {
-    return {
-      msg: 'Success!'
-    }
-  }
+  // async googleRedirect() {
+  //   return {
+  //     msg: 'Success!',
+  //   };
+  // }
 
-  async googleRedirect() {
-    return {
-      msg: 'Success!'
-    }
-  }
-  
   async logout(userId: string) {
     await this.prisma.user.updateMany({
       where: {
@@ -119,17 +133,14 @@ export class AuthService {
     });
   }
 
-  
   async refreshTokens(userId: string, rt: string) {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userId,
       },
     });
-    if (!user || !user.hashedRt){
-      throw new ForbiddenException(
-        'Access Denied.'
-      );
+    if (!user || !user.hashedRt) {
+      throw new ForbiddenException('Access Denied.');
     }
     const userRt = user.hashedRt;
 
@@ -141,9 +152,6 @@ export class AuthService {
     await this.updateRtHash(user.id, tokens.refresh_token);
     return tokens;
   }
-
-
-
 
   async getTokens(
     userId: string,

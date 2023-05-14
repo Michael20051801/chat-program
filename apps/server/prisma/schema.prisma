@@ -23,7 +23,8 @@ model User {
   description String? @db.Text
   hashedRt    String? @db.Text
 
-  Message Message[]
+  sentMessages     Message[] @relation(name: "sender")
+  receivedMessages Message[] @relation(name: "receiver")
 
   @@map("users")
 }
@@ -37,8 +38,11 @@ model Message {
   recieved Boolean? @db.Boolean
   seen     Boolean? @db.Boolean
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sender   User   @relation(name: "sender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId String
+
+  receiver   User   @relation(name: "receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId String 
 
   @@map("messages")
 }

@@ -11,12 +11,19 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('me')
-  getMeByEmail(userEmail: string) {
-    return this.userService.getMyIdByEmail(userEmail);
+  getUserIdByEmail(@Body() body: { userEmail: string }) {
+    return this.userService.getUserIdByEmail(body);
   }
 
-  @Patch()
-  editUser(@GetUser('id') userId: string, @Body() dto: EditUserDto) {
-    return this.userService.editUser(userId, dto);
+  // Create a dto that receive the userId
+  @Get('contacts')
+  getContacts() {
+    return this.userService.getContacts();
   }
+
+  @Post('allUsers')
+  getAllUsers(@GetUser('sub') body: {userId: string}) {
+    return this.userService.getAllUsers(body);
+  }
+
 }

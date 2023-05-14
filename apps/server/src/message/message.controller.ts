@@ -8,13 +8,16 @@ import { GetUser } from '../auth/decorator';
 @Controller('message')
 export class MessageController {
   constructor(private readonly messageService: MessageService) {}
-  @Post()
+  @Post('postMsg')
   postMessage(@GetUser('sub') userId: string, @Body() body: CreateMessageDto) {
     return this.messageService.postMessage(userId, body);
   }
 
-  @Post()
-  getMessages(@GetUser('sub') userId: string) {
-    return this.messageService.getMessages(userId);
+  @Post('getMsg')
+  getMessages(
+    @GetUser('sub') userId: string,
+    @Body() body: { otherUserId: string }
+  ) {
+    return this.messageService.getMessages(userId, body);
   }
 }

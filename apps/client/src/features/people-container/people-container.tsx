@@ -5,7 +5,7 @@ import { ReactComponent as NewChatIcon } from '../../assets/whatsapp-new-chat.sv
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, goToPrivateChat } from '../../store';
 import { NewChatModal, NewChatUser, NewChatUserList } from '../../components';
-import { Person } from '../../types';
+import { Person, PrismaUser } from '../../types';
 
 // Created an functional component with the name of PeopleContainer
 export const PeopleContainer: React.FC = () => {
@@ -13,28 +13,26 @@ export const PeopleContainer: React.FC = () => {
   const usersList = useSelector((state: RootState) => state.usersList);
   const dispatch = useDispatch();
 
-  const handleClick = (person: Person) => {
+  const handleClick = (person: PrismaUser) => {
     dispatch(
       goToPrivateChat({
-        id: person.id,
-        name: person.name,
+        email: person.email,
+        name: person.userName,
         description: person.description,
       })
     );
-
   };
 
   return (
     <div className={style.container}>
       <div className={style.peopleContainer}>
-        {/* This is the list where the clicked users will show */}
         {usersList.map((user, index) => (
           <div
             className={style.userChat}
-            key={index}
+            key={user.email}
             onClick={() => handleClick(user)}
           >
-            <NewChatUser name={user.name} description={user.description} />
+            <NewChatUser name={user.userName} description={user.description} />
           </div>
         ))}
       </div>
