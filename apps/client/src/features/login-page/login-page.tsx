@@ -10,6 +10,7 @@ export const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
+  const [error, setError] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,12 +23,22 @@ export const LoginPage: React.FC = () => {
       .unwrap()
       .then((res) => {
         console.log(res);
+        dispatch(
+          saveUser(
+            // id: res.user.id,
+            // email: res.user.email,
+            // userName: res.user.userName,
+            res.user
+          )
+        );
         dispatch(setLoggedIn(true));
       })
       .catch((err) => {
         console.log(err);
+        setError(err.data.message);
       });
   };
+
 
   return (
     <div className={style.container}>
@@ -37,6 +48,8 @@ export const LoginPage: React.FC = () => {
           Sign Up
         </Link>
       </span>
+      <br/>
+      <span className={style.error}>{error}</span>
       <div className={style.wrapper}>
         <form onSubmit={handleSubmit}>
           <input
@@ -49,6 +62,7 @@ export const LoginPage: React.FC = () => {
               setEmail(e.target.value);
             }}
           />
+
 
           <input
             type="password"

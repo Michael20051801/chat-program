@@ -14,7 +14,11 @@ export class MessageDto {
 
   @IsNotEmpty()
   @IsUUID()
-  receiverId: string
+  receiverId: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  senderId: string;
 
   @IsNotEmpty()
   @IsString()

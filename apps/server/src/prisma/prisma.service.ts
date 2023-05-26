@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService
   extends PrismaClient
-  implements OnModuleInit, OnModuleDestroy
+  // implements OnModuleInit, OnModuleDestroy
 {
   constructor(private config: ConfigService) {
     super({
@@ -17,11 +17,11 @@ export class PrismaService
     });
   }
 
-  async onModuleInit() {
-    await this.$connect; //not sure why need this and destroy
-  }
+  // async onModuleInit() {
+  //   await this.$connect; //not sure why need this and destroy
+  // }
 
-  async onModuleDestroy() {
-    await this.$disconnect;
-  }
+  // async onModuleDestroy() {
+  //   await this.$disconnect;
+  // }
 }

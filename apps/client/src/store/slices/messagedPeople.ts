@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Person } from '../../types';
+import { Person, User } from '../../types';
 
-const initialState: Person = {
-    email: '',
-    name: '',
-    description: '',
+const initialState: User = {
+  id: '',
+  email: '',
+  userName: '',
+  description: '',
 }
 
 const messagedPeopleSlice = createSlice({
     name: 'messagedPeopleSlice',
     initialState: initialState,
     reducers: {
-      goToPrivateChat: (state, action: PayloadAction<Person>) => {
+      goToPrivateChat: (state, action: PayloadAction<User>) => {
         return action.payload;
       },
     },

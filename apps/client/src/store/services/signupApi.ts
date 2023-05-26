@@ -1,3 +1,4 @@
+import { User } from '../../types';
 import { serverApi } from './serverApi';
 
 // Created a new endpoint in serverApi whics is called signupApi.
@@ -6,8 +7,8 @@ import { serverApi } from './serverApi';
 //    url and method, with the body that he gets from the client components.
 const signupApi = serverApi.injectEndpoints({
   endpoints: (build) => ({
-    signup: build.mutation({
-      query: (body) => ({ url: 'auth/signup/local', method: 'POST', body }),
+    signup: build.mutation<{user: User, token: string}, {email: string, password: string, userName: string}>({
+      query: (body) => ({ url: 'auth/signup', method: 'POST', body }),
       
     }),
   }),

@@ -1,9 +1,14 @@
 import React from 'react';
 import style from './new-chat-user-list.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserToList, goToPrivateChat, RootState, useGetContactsQuery } from '../../store';
+import {
+  addUserToList,
+  goToPrivateChat,
+  RootState,
+  useGetContactsQuery,
+} from '../../store';
 import { NewChatUser } from '../new-chat-user/new-chat-user';
-import { Person, PrismaUser } from '../../types';
+import { Person, PrismaUser, User } from '../../types';
 
 interface Props {
   onClose: () => void;
@@ -15,21 +20,23 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
   // const users = useSelector((state: RootState) => state.users);
   const usersList = useSelector((state: RootState) => state.usersList);
   const dispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.saveUser)
-  const {data} = useGetContactsQuery();
+  const currentUser = useSelector((state: RootState) => state.saveUser);
+  const { data } = useGetContactsQuery();
+  console.log(data);
 
-
-  const onChooseUser = (newContact: PrismaUser) => {
+  const onChooseUser = (newContact: User) => {
     if (usersList.find((user) => user.email === newContact.email)) {
+      dispatch(
+        goToPrivateChat(newContact)
+      );
+      return onClose();
+    } else {
+      dispatch(addUserToList(newContact));
+      dispatch(
+        goToPrivateChat(newContact)
+      );
       return onClose();
     }
-    dispatch(addUserToList(newContact));
-    dispatch(goToPrivateChat({
-      email: newContact.email,
-      name: newContact.userName,
-      description: newContact.description,
-    }))
-    return onClose();
   };
 
   // usersList.map((user) => {
@@ -55,18 +62,23 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
           <NewChatUser name={user.name} description={user.description} />
         </div>
       ))} */}
-      {
-        data?.map((contact, index) => (
+      {data?.map((contact, index) =>
+        currentUser.email !== contact.email ? (
+          
           <div
             key={index}
             className={style.user}
             onClick={() => onChooseUser(contact)}
           >
-            <NewChatUser name={contact.userName} description={contact.description} />
+            <NewChatUser
+              name={contact.userName}
+              description={contact.description}
+            />
           </div>
-        ))
-      }
-
+        ) : (
+          ''
+        )
+      )}
     </div>
   );
 };

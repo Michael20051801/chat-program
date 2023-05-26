@@ -2,22 +2,28 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { JwtAtGuard } from '../auth/guard';
-import { GetUser } from '../auth/decorator';
+import { GetUser, GetUserId } from '../auth/decorator';
 
-@UseGuards(JwtAtGuard)
+// @UseGuards(JwtAtGuard)
 @Controller('message')
 export class MessageController {
   constructor(private readonly messageService: MessageService) {}
-  @Post('postMsg')
-  postMessage(@GetUser('sub') userId: string, @Body() body: CreateMessageDto) {
-    return this.messageService.postMessage(userId, body);
+  @Post('post')
+  postMessage(
+    @Body() body: {newMessage: CreateMessageDto},
+  ) {
+    return this.messageService.postMessage(body);
+    // return body;
   }
 
-  @Post('getMsg')
+  @Post('get')
   getMessages(
-    @GetUser('sub') userId: string,
-    @Body() body: { otherUserId: string }
+    @Body() body: {otherUserId: string, currentUserId: string},
   ) {
-    return this.messageService.getMessages(userId, body);
+    const otherUserID = body.otherUserId;
+    const myUserID = body.currentUserId;
+    console.log({otherUserID,})
+    console.log({myUserID,})
+    return this.messageService.getMessages(body);
   }
 }

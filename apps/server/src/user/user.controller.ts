@@ -5,7 +5,7 @@ import { GetUser } from '../auth/decorator';
 import { JwtAtGuard } from '../auth/guard';
 import { EditUserDto } from './dto';
 
-@UseGuards(JwtAtGuard)
+// @UseGuards(JwtAtGuard)
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -22,7 +22,7 @@ export class UserController {
   }
 
   @Post('allUsers')
-  getAllUsers(@GetUser('sub') body: {userId: string}) {
+  getAllUsers(@Body() body: {userId: string}) {
     return this.userService.getAllUsers(body);
   }
 

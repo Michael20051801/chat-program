@@ -14,7 +14,10 @@ export class UserService {
     });
     if (!user)
       throw new ForbiddenException('The user does not exist in the system.');
-    return user.id;
+    const userId = user.id;
+    const type = typeof userId;
+    console.log({userId, type,})
+    return {receiverId: userId,};
   }
 
   async editUser(userId: string, dto: EditUserDto) {
@@ -39,7 +42,9 @@ export class UserService {
         sentMessages: { include: { receiver: { select: { id: true, email: true } } } },
       },
     });
+    console.log(users);
     return users;
+   
     // const users = await this.prisma.user.findMany({
     //   include: {
     //     receivedMessages: {

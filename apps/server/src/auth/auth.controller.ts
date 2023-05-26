@@ -5,13 +5,10 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SigninViaEmailDto, SigninViaPhoneNumberDto, SignupDto } from './dto';
-import { Tokens } from './types';
-import { Request, request } from 'express';
+import { LoginDto, SignupDto } from './dto';
 import { GoogleGuard, JwtAtGuard, JwtRtGuard } from './guard';
 import { GetUser } from './decorator';
 
@@ -19,15 +16,15 @@ import { GetUser } from './decorator';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('signup/local') // /auth/signup/local
-  signupLocal(@Body() dto: SignupDto) {
-    return this.authService.signupLocal(dto);
+  @Post('signup') // /auth/signup
+  signup(@Body() dto: SignupDto) {
+    return this.authService.signup(dto);
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('login/local') // /auth/login/local
-  loginEmailLocal(@Body() signinViaEmailDto: SigninViaEmailDto) {
-    return this.authService.loginEmailLocal(signinViaEmailDto);
+  @Post('login') // /auth/login
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
   }
 
 
@@ -59,20 +56,20 @@ export class AuthController {
   //   return this.authService.googleRedirect();
   // }
 
-  @UseGuards(JwtAtGuard)
+  // @UseGuards(JwtAtGuard)
   @HttpCode(HttpStatus.OK)
   @Post('logout')
-  logout(@GetUser('sub') userId: string): Promise<void> {
+  logout(@GetUser('id') userId: string): Promise<void> {
     return this.authService.logout(userId);
   }
 
-  @UseGuards(JwtRtGuard)
+  // @UseGuards(JwtRtGuard)
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
   refreshTokens(
-    @GetUser('sub') userId: string,
+    @GetUser('id') userId: string,
     @GetUser('refreshToken') refreshToken: string
-  ): Promise<Tokens> {
+  ): Promise<string> {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 }

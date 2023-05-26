@@ -8,6 +8,7 @@ export const CardContainer: React.FC = () => {
     <div className={style.container}>
       <MessagesContainer />
       <InputContainer />
+      
     </div>
   );
 };

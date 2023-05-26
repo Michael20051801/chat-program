@@ -1,3 +1,4 @@
+import { User } from '../../types';
 import { serverApi } from './serverApi';
 
 // Created a new endpoint in serverApi whics is called loginApi.
@@ -6,8 +7,8 @@ import { serverApi } from './serverApi';
 //    url and method, with the body that he gets from the client components.
 const loginApi = serverApi.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation({
-      query: (body) => ({ url: 'auth/login/local', method: 'POST', body }),
+    login: build.mutation<{user: User, token: string}, {email: string, password: string}>({
+      query: (body) => ({ url: 'auth/login', method: 'POST', body }),
     }),
   }),
 

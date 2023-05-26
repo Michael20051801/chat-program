@@ -22,7 +22,7 @@ export class AtStrategy extends PassportStrategy(Strategy, 'jwt') {
   //   delete user.hash;
   //   return user;
   // }
-  async validate(payload: any) {
+  async validate(payload: { id: number; email: string }) {
     console.log(payload,)
     return {
       ...payload,

@@ -1,5 +1,5 @@
 .container {
-  height: 80%;
+  height: 90%;
   width: 60%;
   background-color: rgba(249,204,11,255);
   display: flex;
@@ -73,4 +73,9 @@ input::placeholder{
 .u:active {
   color:blue;
   font-weight: bold;
+}
+
+.error {
+  color: red;
+  padding-top: 15px;
 }

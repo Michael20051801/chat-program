@@ -1,44 +1,52 @@
-import React, { KeyboardEvent, useState, ChangeEvent } from 'react';
+import React, { KeyboardEvent, useState, ChangeEvent, useEffect } from 'react';
 import style from './input-container.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ReactComponent as PaperPlane } from '../../assets/paper-plane.svg';
-import { RootState, saveMessage, useGetUserIdMutation, useSendMessageMutation } from '../../store';
+import {
+  RootState,
+  saveMessage,
+  useGetUserIdMutation,
+  useSendMessageMutation,
+} from '../../store';
 
 // Created an functional component with the name of InputContainer
 export const InputContainer: React.FC = () => {
-  const dispatch = useDispatch();
-  const [sendMessage, result] = useSendMessageMutation();
+  // const dispatch = useDispatch();
+  const [sendMessage] = useSendMessageMutation();
   const [content, setContent] = useState('');
-  const receiver = useSelector((state: RootState) => state.goToPrivateChat)
-  const [getReceiverIdByEmail] = useGetUserIdMutation();
+  let senderId: string = '';
+  let receiverId: string = '';
+  // useEffect(() => {
+  //   senderId = useSelector((state: RootState) => state.saveUser.id);
+  //   receiverId = useSelector((state: RootState) => state.goToPrivateChat.id);
+  // }, [senderId || receiverId])
+  senderId = useSelector((state: RootState) => state.saveUser.id);
+  receiverId = useSelector((state: RootState) => state.goToPrivateChat.id);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
   };
 
   const handleClick = () => {
-    try {
-      console.log({ sent: new Date().toISOString() });
-      const receiverId = getReceiverIdByEmail(receiver)
-      sendMessage({ content, receiverId })
-        .unwrap()
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      setContent('');
-    } catch {
-      throw new Error('Try Again!');
-    }
-    console.log({ result, content });
+    console.log({receiverId,})
+    const newMessage = {content: content, receiverId: receiverId, senderId: senderId};
+    sendMessage({
+      newMessage,
+    })
+    .unwrap()
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    setContent('');
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
+      // event.preventDefault();
       handleClick();
     }
   };
@@ -53,6 +61,7 @@ export const InputContainer: React.FC = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
+      
       <button className={style.sendButton} onClick={handleClick}>
         <PaperPlane className={style.paperPlane} />
       </button>

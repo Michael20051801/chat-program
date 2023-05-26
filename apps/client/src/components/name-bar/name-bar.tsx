@@ -11,8 +11,9 @@ export const NameBar: React.FC = () => {
 
   return (
     <div className={style.container}>
-      <span className={style.name}>{goToPrivateChat.name}</span>
+      <span className={style.name}>{goToPrivateChat.userName}</span>
       <span className={style.description}>{goToPrivateChat.description}</span>
+      <span className={style.dropdown}>{goToPrivateChat.description}</span>
     </div>
   );
 };

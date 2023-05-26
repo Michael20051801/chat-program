@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Message } from '../../types';
 
-const initialState: string[] = [];
+const initialState: Message[] = [];
 
 const messagesSlice = createSlice({
     name: 'messagesSlice',
     initialState: initialState,
     reducers: {
-      saveMessage: (state, action: PayloadAction<string>) => {
+      saveMessage: (state, action: PayloadAction<Message>) => {
         state.push(action.payload);
       },
     },

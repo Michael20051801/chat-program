@@ -1,10 +1,9 @@
 import { ForbiddenException, Injectable, UseGuards } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { SigninViaEmailDto, SigninViaPhoneNumberDto, SignupDto } from './dto';
+import { LoginDto, SignupDto } from './dto';
 import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
-import { Tokens } from './types';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAtGuard, JwtRtGuard } from './guard';
 import axios from 'axios';
@@ -19,7 +18,7 @@ export class AuthService {
     private config: ConfigService
   ) {}
 
-  async signupLocal(dto: SignupDto){
+  async signup(dto: SignupDto) {
     const hash = await argon.hash(dto.password);
 
     try {
@@ -42,13 +41,14 @@ export class AuthService {
       });
 
       delete user.hash;
-      
-      const tokens = await this.getTokens(user.id, user.email); //?
-      await this.updateRtHash(user.id, tokens.refresh_token);
-      
+
+      const token = await this.getToken(user.id, user.email); //?
+      const headers = {
+        Authorization: 'Bearer ' + token,
+      };
       return {
         user,
-        tokens,
+        token,
       };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -62,7 +62,8 @@ export class AuthService {
     }
   }
 
-  async loginEmailLocal({ email, password }: SigninViaEmailDto) {
+  async login(dto: LoginDto) {
+    const email = dto.email;
     const user = await this.prisma.user.findUnique({
       where: {
         email,
@@ -84,7 +85,7 @@ export class AuthService {
         'The given email does not exist in the system.'
       );
 
-    const pwMatches = await argon.verify(user.hash, password);
+    const pwMatches = await argon.verify(user.hash, dto.password);
 
     if (!pwMatches) {
       throw new ForbiddenException('Incorrect password.');
@@ -92,14 +93,15 @@ export class AuthService {
 
     delete user.hash;
 
-    const tokens = await this.getTokens(user.id, user.email); //?
-    await this.updateRtHash(user.id, tokens.refresh_token);
+    const token = await this.getToken(user.id, user.email); //?
+    const headers = {
+      Authorization: 'Bearer ' + token,
+    };
     return {
       user,
-      tokens,
+      token,
     };
   }
-
 
   // async signupGoogle(profile: object) {
   //   return {
@@ -142,26 +144,24 @@ export class AuthService {
     if (!user || !user.hashedRt) {
       throw new ForbiddenException('Access Denied.');
     }
-    const userRt = user.hashedRt;
 
     const rtMatches = await argon.verify(user.hashedRt, rt);
 
     if (!rtMatches) throw new ForbiddenException('Access Denied.');
 
-    const tokens = await this.getTokens(user.id, user.email);
-    await this.updateRtHash(user.id, tokens.refresh_token);
+    const tokens = await this.getToken(user.id, user.email);
     return tokens;
   }
 
-  async getTokens(
+  async getToken(
     userId: string,
     email: string
     // phoneNumber?: number
-  ): Promise<Tokens> {
+  ): Promise<string> {
     let payload;
     if (email) {
       payload = {
-        sub: userId,
+        id: userId,
         email,
       };
     }
@@ -172,35 +172,24 @@ export class AuthService {
     //   };
     // }
     const secretAt = this.config.get('JWT_AT_SECRET');
-    const secretRt = this.config.get('JWT_RT_SECRET');
 
-    const [at, rt] = await Promise.all([
-      this.jwt.signAsync(payload, {
-        expiresIn: '60m',
-        secret: secretAt,
-      }),
-
-      this.jwt.signAsync(payload, {
-        expiresIn: '7d',
-        secret: secretRt,
-      }),
-    ]);
-
-    return {
-      access_token: at,
-      refresh_token: rt,
-    };
-  }
-
-  async updateRtHash(userId: string, rt: string) {
-    const hash = await argon.hash(rt);
-    await this.prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        hashedRt: hash,
-      },
+    const at = await this.jwt.signAsync(payload, {
+      expiresIn: '60m',
+      secret: secretAt,
     });
+
+    return at;
   }
+
+  // async updateRtHash(userId: string, rt: string) {
+  //   const hash = await argon.hash(rt);
+  //   await this.prisma.user.update({
+  //     where: {
+  //       id: userId,
+  //     },
+  //     data: {
+  //       hashedRt: hash,
+  //     },
+  //   });
+  // }
 }

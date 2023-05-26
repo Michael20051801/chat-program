@@ -7,7 +7,7 @@
     margin: 0 auto;
     /* left: 15%; */
     top: 0;
-    right: 15%;
+    /* right: 15%; */
     /* position: fixed; */
     z-index: 2;
     position: sticky;
@@ -18,6 +18,11 @@
     gap: 10px;
     overflow: hidden;
     cursor: default;
+}
+
+.dropdown {
+    float: right;
+    
 }
 
 .name {

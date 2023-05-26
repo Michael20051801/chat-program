@@ -1,10 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { usersListReducer, usersReducer, messagesReducer, setLoggedInReducer, saveUserReducer, messagedPeopleReducer } from './slices';
+import {
+  usersListReducer,
+  messagesReducer,
+  setLoggedInReducer,
+  saveUserReducer,
+  messagedPeopleReducer,
+} from './slices';
 import { serverApi } from './services';
 
 export const store = configureStore({
   reducer: {
-    users: usersReducer,
     usersList: usersListReducer,
     messages: messagesReducer,
     setLoggedIn: setLoggedInReducer,
@@ -13,7 +18,10 @@ export const store = configureStore({
     [serverApi.reducerPath]: serverApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(serverApi.middleware),
+    getDefaultMiddleware({
+      immutableCheck: { warnAfter: 128 },
+      serializableCheck: { warnAfter: 128 },
+    }).concat(serverApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

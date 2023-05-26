@@ -4,6 +4,8 @@ export interface Message {
   content: string;
   received?: boolean;
   seen?: boolean;
-  sender: User;
-  receiver: User;
+  // sender: User;
+  // receiver: User;
+  senderId: string;
+  receiverId: string;
 }
