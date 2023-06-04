@@ -1,195 +1,117 @@
-import { ForbiddenException, Injectable, UseGuards } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto, SignupDto } from './dto';
 import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
-import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from '@nestjs/passport';
-import { JwtAtGuard, JwtRtGuard } from './guard';
-import axios from 'axios';
-import { OAuth2Client, UserRefreshClient } from 'google-auth-library';
-import { ConfigService } from '@nestjs/config';
 
+// Defining A service with the name of AuthService.
+// It's injectable.
 @Injectable()
 export class AuthService {
+
+  // In the constructor it has PrismaService, so I can use prisma
+  //  in my code here.
   constructor(
     private prisma: PrismaService,
-    private jwt: JwtService,
-    private config: ConfigService
   ) {}
 
   async signup(dto: SignupDto) {
+
+    // I use Argon to hash the the user's password.
     const hash = await argon.hash(dto.password);
 
     try {
+      // Prisma tries to create a new user in the database.
       const user = await this.prisma.user.create({
         data: {
           email: dto.email,
           hash,
           userName: dto.userName,
         },
+
+        // I don't need to return the hash, I have no use in it.
         select: {
-          createdAt: false,
-          updatedAt: false,
-          hashedRt: false,
           description: true,
           email: true,
           id: true,
           userName: true,
-          hash: true,
+          status: false,
+          hash: false,
         },
       });
+      // returns the new created user
+      return user;
 
-      delete user.hash;
-
-      const token = await this.getToken(user.id, user.email); //?
-      const headers = {
-        Authorization: 'Bearer ' + token,
-      };
-      return {
-        user,
-        token,
-      };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
+
+          // If the email already exists in the system, throw an 403 error
+          // with suited message and do not create the user.
           throw new ForbiddenException(
             'The given email is already exists in the system, please log in or use a different email.'
           );
         }
       }
+      // If the error is not about the already exists email, throw it also.
       throw error;
     }
   }
 
   async login(dto: LoginDto) {
     const email = dto.email;
+    
+    // Prisma tries to find a user in the database, 
+    //  according to the email in the dto of the input.
     const user = await this.prisma.user.findUnique({
       where: {
         email,
       },
+
       select: {
-        createdAt: false,
-        updatedAt: false,
-        hashedRt: false,
         description: true,
         email: true,
         id: true,
         userName: true,
+        status: false,
         hash: true,
       },
     });
 
+    // If the email does not exists in the system, throw an 403 error
+    //  with suited message and do not return the user.
     if (!user)
       throw new ForbiddenException(
         'The given email does not exist in the system.'
       );
 
+    // Veryfies if the given password match the hashed password in
+    //  the database.
     const pwMatches = await argon.verify(user.hash, dto.password);
 
+    // If the passwords do not natch. throw an 403 error 
+    //  with suited message and do not return the user.
     if (!pwMatches) {
       throw new ForbiddenException('Incorrect password.');
     }
 
+    // I don't need to return the hash, I have no use in it.
+    // I'm unselecting it here and not earlier brcause I had
+    //  to make sure the passwords are matching.
     delete user.hash;
 
-    const token = await this.getToken(user.id, user.email); //?
-    const headers = {
-      Authorization: 'Bearer ' + token,
-    };
-    return {
-      user,
-      token,
-    };
+    // returns the found user.
+    return user;
   }
-
-  // async signupGoogle(profile: object) {
-  //   return {
-  //     msg: 'Success!',
-  //   };
-  // }
-
-  // async loginGoogle(code: string) {
-  //   return {
-  //     msg: 'Success!',
-  //   };
-  // }
-
-  // async googleRedirect() {
-  //   return {
-  //     msg: 'Success!',
-  //   };
-  // }
 
   async logout(userId: string) {
-    await this.prisma.user.updateMany({
+    await this.prisma.user.update({
       where: {
         id: userId,
-        hashedRt: {
-          not: null,
-        },
       },
       data: {
-        hashedRt: null,
+        status: false,
       },
-    });
+    })
   }
-
-  async refreshTokens(userId: string, rt: string) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
-    if (!user || !user.hashedRt) {
-      throw new ForbiddenException('Access Denied.');
-    }
-
-    const rtMatches = await argon.verify(user.hashedRt, rt);
-
-    if (!rtMatches) throw new ForbiddenException('Access Denied.');
-
-    const tokens = await this.getToken(user.id, user.email);
-    return tokens;
-  }
-
-  async getToken(
-    userId: string,
-    email: string
-    // phoneNumber?: number
-  ): Promise<string> {
-    let payload;
-    if (email) {
-      payload = {
-        id: userId,
-        email,
-      };
-    }
-    // else if (phoneNumber) {
-    //   payload = {
-    //     sub: userId,
-    //     phoneNumber,
-    //   };
-    // }
-    const secretAt = this.config.get('JWT_AT_SECRET');
-
-    const at = await this.jwt.signAsync(payload, {
-      expiresIn: '60m',
-      secret: secretAt,
-    });
-
-    return at;
-  }
-
-  // async updateRtHash(userId: string, rt: string) {
-  //   const hash = await argon.hash(rt);
-  //   await this.prisma.user.update({
-  //     where: {
-  //       id: userId,
-  //     },
-  //     data: {
-  //       hashedRt: hash,
-  //     },
-  //   });
-  // }
 }

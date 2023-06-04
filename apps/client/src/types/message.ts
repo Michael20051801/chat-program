@@ -1,11 +1,8 @@
-import { User } from "./user";
-
+// Creating a new interface (type) called Message.
 export interface Message {
   content: string;
   received?: boolean;
   seen?: boolean;
-  // sender: User;
-  // receiver: User;
   senderId: string;
   receiverId: string;
 }

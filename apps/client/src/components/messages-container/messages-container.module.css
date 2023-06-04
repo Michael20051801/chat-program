@@ -1,3 +1,4 @@
+/* The general design of the MessageContainer component. */
 .container {
     width: 100%;
     background-color: grey;
@@ -8,29 +9,14 @@
     position: relative;
 }
 
-
-/* .msgCloud {
-    border-radius: 50px 5px 50px 22px;
-    background: #87e405f5;
-    padding: 20px;
-    /* width: 20%; *\
-    float: right;
-    margin-top: 50px;
-    display: flex;
-    max-width: 50%;
-    min-width: 150px;
-    min-height: 2px;
-    max-height: 200px;
-}  */
-
+/* The design of the green message cloud, the shape on which
+    the messages lays on. Now its only a rounded rectangle. */
 .msgCloud {
     position: relative;
     display: inline-flex;
     color: #fff;
     min-width: 65px;
     max-width: 63%;
-    /* background-color: #2e7384; */
-    /* max-height: infinite; */
     background-color: #36cd14f5;
     margin: 30px;
     padding: 10px;
@@ -39,15 +25,16 @@
     padding-left: 15px;
     float: right;
     clear: both;
-    /* z-index: 1; */
-
 }
 
+/* The different design that recived messages' clouds have over the sent messages' ones. */
 .left {
     background-color: #67dd4cf5;
     float: left;
 }
 
+/* The design of the curved shape that makes the rounded rectangle look like a cloud.
+    Refers to the sent messages clouds. */
 .msgCloud::after {
     content: "";
     position: absolute;
@@ -55,12 +42,11 @@
     right: -25px;
     width: 40px;
     height: 25px;
-    /* background: radial-gradient(25px at top left, #0000 99%, #2e7384 102%); */
-    background: radial-gradient(25px at bottom right, #0000 99%, #36cd14f5 102%);
-    /* z-index: -1; */
-    
+    background: radial-gradient(25px at bottom right, #0000 99%, #36cd14f5 102%);    
 }
 
+/* The design of the curved shape that makes the rounded rectangle look like a cloud.
+    Refers to the received messages clouds */
 .msgCloud.left::after {
     content: "";
     position: absolute;
@@ -68,27 +54,32 @@
     left: -25px;
     width: 40px;
     height: 25px;
-    /* background: radial-gradient(25px at top left, #0000 99%, #2e7384 102%); */
     background: radial-gradient(25px at bottom left, #0000 99%, #67dd4cf5 102%);
-
 }
 
-
+/* The design of the text of the message, inside the message cloud. */
 .actualMsg {
-    /* display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;  */
     flex-wrap: wrap;
     max-width: 100%;
-    /* width: 100%; */
     overflow-wrap: break-word;
     unicode-bidi: plaintext;
     text-align: start;
     
 }
 
+/* The design of the red sentece that suggests that I am messaging nobody. */
 .noOne {
     color: rgb(180, 14, 14);
     font-weight: 800;
     font-size: larger;
+    user-select: none;
+}
+
+/* The design of the white sentence that suggests that there were no messages
+    between the current user and the other user. */
+.noMessages {
+    color: rgb(231, 245, 254);
+    font-weight: 500;
+    font-size: larger;
+    user-select: none;
 }

@@ -1,3 +1,4 @@
+/* The general design of the InputContainer component. */
 .container {
     width: 100%;
     height: 12%;
@@ -7,15 +8,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /* justify-content: space-between; */
     gap: 0.5rem;
     position: relative;
 }
 
+/* The design of the green, send button on the bottom right side of the screen. */
 .sendButton {
     display: flex;
     flex-basis: 4.8%;
-    /* height: 100%; */
     width: 5.5%;
     max-width: 100%;
     max-height: 100%;
@@ -27,21 +27,14 @@
     cursor: pointer;
 }
 
-/* responsive-like circle */
+
+/* Making the send button more circled */
 .sendButton::after {
     content: "";
-    /* display: block; */
     padding-bottom: 100%;
 }
 
-.outerInput {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-}
-
+/* The design of the input field */
 .inputField {
     /* position: absolute; */
     display: flex; 
@@ -59,14 +52,15 @@
     padding-bottom: 40px;
 }
 
-/* placeholder */
+/* The design of the placeholder inside of the input field */
 .inputField::placeholder {
     color: rgb(182, 182, 182);
     font-size: medium;
     font-weight: 600;
+    user-select: none;
 }
 
-
+/* The design of the paper plane icon on the green send button */
 .paperPlane{
     width: 70%;
     height: 70%;

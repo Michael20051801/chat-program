@@ -1,10 +1,8 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   RootState,
   useGetMessagesMutation,
-  useGetUserIdMutation,
-  useSendMessageMutation,
 } from '../../store';
 import style from './messages-container.module.css';
 import { NameBar } from '../name-bar';
@@ -16,59 +14,67 @@ export const MessagesContainer: React.FC = () => {
   const otherUser = useSelector((state: RootState) => state.goToPrivateChat);
   const currentUserId = currentUser.id;
   const otherUserId = otherUser.id;
-  console.log({currentUserId,});
-  console.log({otherUserId,});
-  const [getMessages, {data}] = useGetMessagesMutation();
-  // const dispatch = useDispatch();
-  // const messages = useSelector((state: RootState) => state.messages);
+  const [getMessages] = useGetMessagesMutation();
   const [messages, setMessages] = useState<Message[]>([]);
-  // let messages: Message[] = [];
-  console.log({messages,});
+
+  // Activating the getMessages mutation when there is a change 
+  //  in the messages, which is actually getting the messages between 
+  //  otherUser and currentUser from the database.
   useEffect(() => {
-    console.log({otherUserId,})
     getMessages({otherUserId, currentUserId,})
       .unwrap()
+      // If it succeeds, set the messages state (which will be the messages
+      //  that are shown on the screen) to the messages that are recived from the DB.
       .then((res) => {
-        console.log({res,});
         setMessages(res);
       })
+      // If there is an error, log it.
       .catch((err) => {
         console.log(err);
       });
   }, [messages]);
-  // const [getMessages] = useGetMessagesMutation();
-  // const senderId = sender.id;
-  // const receiverId = receiver.id;
-  // getMessages({ senderId, receiverId })
-  //   .unwrap()
-  //   .then((res) => {
-  //     messages = res;
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 
+  // Scroll down automatically on new message, only if there 
+  //  there is a change in the number of messages.
   const divRef = useRef<null | HTMLDivElement>(null);
-  //scroll down on new message
   useEffect(() => {
     divRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages.length]);
 
+  // If there is other user (which means if the user clicked on 
+  //  someone to chat with), get all the messages between him 
+  //  and the other user. Else, return a message on the screen
+  //  "Click on the blue button in the left side in order to start a conversation!".
   return otherUserId ? (
     <div className={style.container}>
+      {/* Return the namebar component */}
       <NameBar />
-      {messages.map((msg, index) => (
-        msg.receiverId === otherUserId ? 
-        (
-        <div className={style.msgCloud} key={index} ref={divRef}>
-          <div className={style.actualMsg}>{msg.content}</div>
-        </div>
-        ) : (
-        <div className={`${style.msgCloud} ${style.left}`} key={index} ref={divRef}>
-          <div className={style.actualMsg}>{msg.content}</div>
-        </div>
-        )
-      ))}
+      {/* If there are messages between the two users, return them.
+           Else, return the message "Send a message to start a conversation!" */}
+      {messages.length ? (
+        messages.map((msg, index) => (
+          // If the messages are sent, show them on the right side.
+          // If the messages are received, show them on the left side.
+          msg.receiverId === otherUserId ? 
+          (
+          <div className={style.msgCloud} key={index} ref={divRef}>
+            <div className={style.actualMsg}>{msg.content}</div>
+          </div>
+          ) : (
+          <div className={`${style.msgCloud} ${style.left}`} key={index} ref={divRef}>
+            <div className={style.actualMsg}>{msg.content}</div>
+          </div>
+          )
+        ))
+      ) : (
+        
+        <span className={style.noMessages}>
+          <br/>
+          <br/>
+          <br/>
+          Send a message to start a conversation!
+        </span>
+      )}
     </div>
   ) : (
     <div className={style.container}>

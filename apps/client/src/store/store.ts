@@ -1,22 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit';
 import {
   usersListReducer,
-  messagesReducer,
   setLoggedInReducer,
   saveUserReducer,
   messagedPeopleReducer,
 } from './slices';
 import { serverApi } from './services';
 
+// Configures the store of the project (the global state,
+//  actually).
 export const store = configureStore({
+  // Specifies all the reducers that are in the store,
+  //  including the slices and the api-s.
   reducer: {
     usersList: usersListReducer,
-    messages: messagesReducer,
     setLoggedIn: setLoggedInReducer,
     saveUser: saveUserReducer,
     goToPrivateChat: messagedPeopleReducer,
     [serverApi.reducerPath]: serverApi.reducer,
   },
+  // Getting a default middleware.
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       immutableCheck: { warnAfter: 128 },

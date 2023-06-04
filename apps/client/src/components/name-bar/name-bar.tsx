@@ -11,9 +11,10 @@ export const NameBar: React.FC = () => {
 
   return (
     <div className={style.container}>
+      {/* Showing the name and the description of the user the current user
+           clicked on in the user list. */}
       <span className={style.name}>{goToPrivateChat.userName}</span>
       <span className={style.description}>{goToPrivateChat.description}</span>
-      <span className={style.dropdown}>{goToPrivateChat.description}</span>
     </div>
   );
 };

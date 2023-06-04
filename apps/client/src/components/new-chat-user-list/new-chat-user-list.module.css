@@ -1,3 +1,4 @@
+/* The style of the user list inside the modal. */
 .container {
     display: flex;
     flex-direction: row;
@@ -6,7 +7,8 @@
     width: 100%;
     border: none; 
 }
-
+/* The style of the modal if there is no contacts and 
+    as a result no user list. */
 .empty {
     display: flex;
     align-items: center;
@@ -14,6 +16,8 @@
     font-weight: bold;
 }
 
+/* The style of each one of the squares of the users 
+    inside the user list. */
 .user {
     display: flex;
     justify-content: center;

@@ -1,3 +1,5 @@
+/* The general design of the card container (message container+
+    inpit field+padding) */
 .container {
   background-color: aqua;
   padding-top: 2rem;
@@ -7,8 +9,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.changeDesc {
-  
 }

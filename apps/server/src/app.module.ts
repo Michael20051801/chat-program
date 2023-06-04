@@ -6,6 +6,9 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { MessageModule } from './message/message.module';
 
+// Defining the main module of the server app, and its called
+//  AppModule. It imports the ConfigModule (and sets his isGlobal
+//  option to true), AuthModule, UserModule, PrismaModule and MessageModule.
 @Module({
   imports: [
     ConfigModule.forRoot({

@@ -1,34 +1,34 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// Generating the prisma client
 generator client {
   provider = "prisma-client-js"
 }
 
+// Providing the database provider and its url, in order
+//  to connect prisma to a DB.
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+// Creating a model called User.
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now()) @db.Timestamp()
-  updatedAt DateTime @updatedAt @db.Timestamp()
+  id String @id @default(uuid())
 
-  email    String @unique @db.Text
-  // phoneNumber String @unique
-  hash     String @db.Text
-  userName String @db.Text
+  email    String  @unique @db.Text
+  hash     String  @db.Text
+  userName String  @db.Text
+  status Boolean @default(false) @db.Boolean
 
   description String? @db.Text
-  hashedRt    String? @db.Text
 
+  // The sent and received messages every user has.
   sentMessages     Message[] @relation(name: "sender")
   receivedMessages Message[] @relation(name: "receiver")
 
   @@map("users")
 }
 
+// Creating a model called Message.
 model Message {
   id String @id @default(uuid())
 
@@ -38,26 +38,15 @@ model Message {
   recieved Boolean? @db.Boolean
   seen     Boolean? @db.Boolean
 
+  // Creating a relation between User and Message. The message model is going 
+  //  to have a field called senderId, which will be the id of the sender user.
   sender   User   @relation(name: "sender", fields: [senderId], references: [id], onDelete: Cascade)
   senderId String
 
+  // Creating a relation between User and Message. The message model is going 
+  //  to have a field called receiverId, which will be the id of the receiver user.
   receiver   User   @relation(name: "receiver", fields: [receiverId], references: [id], onDelete: Cascade)
   receiverId String
 
   @@map("messages")
-}
-
-model GoogleUser {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now()) @db.Timestamp()
-  updatedAt DateTime @updatedAt @db.Timestamp()
-
-  email    String @unique @db.Text
-  // phoneNumber String @unique
-  userName String @db.Text
-
-  description String? @db.Text
-  hashedRt    String? @db.Text
-
-  @@map("googleusers")
 }

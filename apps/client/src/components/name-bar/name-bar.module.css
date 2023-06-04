@@ -1,3 +1,4 @@
+/* The general design of the NameBar component. */
 .container {
     background-color: rgba(240, 240, 240, 0.95);
     /* padding-top: 2rem; */
@@ -17,18 +18,16 @@
     flex-direction: column;
     gap: 10px;
     overflow: hidden;
-    cursor: default;
+    user-select: none;
 }
 
-.dropdown {
-    float: right;
-    
-}
 
+/* Determins the size of the name in the name bar. */
 .name {
     font-size: x-large;
 }
 
+/* Determins the size of the description in the name bar. */
 .description {
     font-size: small;
     color: #797979;

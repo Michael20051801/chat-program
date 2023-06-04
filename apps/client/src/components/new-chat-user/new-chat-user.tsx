@@ -11,17 +11,17 @@ interface Props {
 // Created an functional component with the name of NewChatUser
 // It is getting props from PeopleContainer or NewChatUserList components
 export const NewChatUser: React.FC<Props> = ({ description, name }: Props) => {
-  // const handleClick = () => {
-  //   return openChat;
-  // }
 
   return (
     <div className={style.container}>
-      <div className={style.profilePicButton}>
+      {/* Defining the profile picture of the user (default user) */}
+      <div className={style.profilePicDiv}>
         <ProfilePic className={style.profilePic} />
       </div>
+      {/* Defining the title and the description of the user as recieved 
+           from props. */}
       <div>
-        <div className={style.title}>{name}</div>
+        <div>{name}</div>
         <div className={style.description}>{description}</div>
       </div>
     </div>

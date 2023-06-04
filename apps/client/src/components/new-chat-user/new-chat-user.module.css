@@ -1,20 +1,18 @@
+/* Determins the height of the actual user inside the user
+    list in the modal. */
 .container {
     height: 50%;
 }
 
-/* .title {
-    margin-left: 0.2rem;
-
-} */
-
+/* The style of the description in the user list in the modal. */
 .description {
-    /* margin-left: 0.2rem; */
     color: rgb(152, 152, 152);
     font-size: small;
 
 }
 
-.profilePicButton {
+/* The style of the div outside the profile picture. */
+.profilePicDiv {
     display: flex;
     flex-basis: 4.8%;
     max-width: 100%;
@@ -28,6 +26,7 @@
     background: none;
 }
 
+/* The style of the profile picture itself. */
 .profilePic {
     display: flex;
     height: 70%;

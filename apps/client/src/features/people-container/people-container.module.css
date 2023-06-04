@@ -1,47 +1,50 @@
+/* The general design of the PeopleContainer component. */
 .container {
   width: 20%;
   background-color: yellow;
   display: flex;
   flex-direction: column;
+  user-select: none;
 }
 
+/* The style of the user list inside of the people container. */
 .peopleContainer {
   height: 85%;
   overflow: auto;
 }
 
+/* The style of each user in the user list in the people container. */
 .userChat {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   height: 30%;
   max-height: 50%;
   padding-top: 10%;
-  /* margin-top: 10%; */
   cursor: pointer;
   border-bottom: 1px solid rgb(113, 113, 113);
 }
 
+/* When hovering over a user inside the user list in the people container,
+    there is a transition and vhange in color. */
 .userChat:hover {
   background-color: rgb(46, 187, 238);
   transition: 0.4s;
 }
 
+/* The style of the div outside of the add users button (the blue button). */
 .addPeopleDiv {
   display: flex;
   height: 15%;
-  /* margin-bottom: 0.8rem; */
   border-top: 1px solid black;
   padding: 0.5rem;
   align-items: center;
   justify-content: center;
 }
 
+/* The dtyle of the blue add users button */
 .addPeopleButton {
   display: flex;
-  /* flex-basis: 22%; */
   background-color: blue;
-  /* height: 70%; */
   width: 23%;
   max-width: 100%;
   max-height: 100%;
@@ -53,13 +56,13 @@
   cursor: pointer;
 }
 
-/* responsive-like circle */
+/* Making the send button more circled */
 .addPeopleButton::after {
   content: '';
-  /* display: block; */
   padding-bottom: 100%;
 }
 
+/* The style of the add users icon inside of the blue button. */
 .addChat {
   width: 70%;
   height: 70%;

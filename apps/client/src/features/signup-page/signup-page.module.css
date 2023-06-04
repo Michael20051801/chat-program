@@ -1,3 +1,4 @@
+/* The general design of the signup page. */
 .container {
   height: 90%;
   width: 60%;
@@ -10,6 +11,7 @@
   flex-direction: column;
 }
 
+/* The style of the div that wraps the form. */
 .wrapper {
   border-radius: 7px;
   background-color: inherit;
@@ -21,6 +23,7 @@
   align-items: center;
 }
 
+/* The style of the form. */
 form {
   display: flex;
   flex-direction: column;
@@ -28,6 +31,8 @@ form {
   width: 100%;
 }
 
+/* The style of the input fields that are not submit 
+    (The Continue button). */
 input:not([type=submit]) {
   width: 70%;
   border: 1px solid #ccc;
@@ -38,11 +43,13 @@ input:not([type=submit]) {
   font-size: medium;
 }
 
+/* The style of the placeholder inside the input fields. */
 input::placeholder{
   text-align: center;
   font-weight: bold;
 }
 
+/* The style of the submit ('Continue') button. */
 .signupSubmit {
   margin-top: 5%;
   width: 50%;
@@ -56,25 +63,32 @@ input::placeholder{
   font-size: medium;
 }
 
+/* Changes the background color of the submit button
+    when hovering over it. */
 .signupSubmit:hover {
   background-color: rgba(4, 4, 156, 0.854);
 }
 
+/* The style of the sentence that in the end of it
+    there is a link to the login page. */
 .link {
   text-decoration: none;
   color: rgb(0, 0, 181);
   cursor: default;
 }
 
+/* The color of the link if it the user visited it. */
 .u:visited {
   color: rgb(0, 0, 181);
 }
 
+/* The color of the link if the user clicks on it. */
 .u:active {
   color:blue;
   font-weight: bold;
 }
 
+/* The style of the error, if there is one, inside the signup page. */
 .error {
   color: red;
   padding-top: 15px;

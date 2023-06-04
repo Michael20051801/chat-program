@@ -1,3 +1,4 @@
+# The configurations of Docker to connect to this server app.
 version: '3.8'
 services:
   dev-db:

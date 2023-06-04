@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import style from './new-chat-modal.module.css';
 
 import { CSSTransition } from 'react-transition-group';
@@ -19,6 +19,8 @@ export const NewChatModal: React.FC<Props> = ({
   children,
 }: Props) => {
   return (
+    // Doing a transition to the modal, if the showProp is true
+    //   (if the user clicked on the blue button in the peopleContainer).
     <CSSTransition
       in={showProp}
       unmountOnExit
@@ -28,23 +30,27 @@ export const NewChatModal: React.FC<Props> = ({
         exitActive: style.modalExit,
       }}
     >
+      {/* If you click anywhere outside of the actual modal (outside of
+           the modal content), the whole modal will be closed. */}
       <div className={style.modal} onClick={onClose}>
         <div
           className={style.modalContent}
           onClick={(e) => e.stopPropagation()}
         >
           <div className={style.modalHeader}>
+            {/* returning the modal title as recived from props. */}
             <h4 className={style.modalTitle}>{title}</h4>
           </div>
-
+          {/* returning the modal chikdren (NewChatUserList component) as 
+               recived from props. */}
           <div className={style.modalBody}>{children}</div>
 
           <div className={style.modalFooter}>
+            {/* If you click on the 'close' button, the modal will be closed. */}
             <button className={style.closeButton} onClick={onClose}>
               Close
             </button>
           </div>
-          {/* <span className="style.close">&times;</span> */}
         </div>
       </div>
     </CSSTransition>
