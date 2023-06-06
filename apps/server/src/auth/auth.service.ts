@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto, SignupDto } from './dto';
-import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
+import * as argon from 'argon2';
 
 // Defining A service with the name of AuthService.
 // It's injectable.

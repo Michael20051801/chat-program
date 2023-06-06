@@ -6,9 +6,9 @@
 
 /* The style of the description in the user list in the modal. */
 .description {
-    color: rgb(152, 152, 152);
+    color: rgb(116, 116, 116);
     font-size: small;
-
+    margin-top: 6%;
 }
 
 /* The style of the div outside the profile picture. */

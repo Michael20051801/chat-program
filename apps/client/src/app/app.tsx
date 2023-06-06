@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './app.module.css';
 
-import { LoginPage, SignupPage } from '../features';
+import { LoginPage, NotFound, SignupPage } from '../features';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { HomePage } from '../features';
 import { useSelector } from 'react-redux';
@@ -33,6 +33,11 @@ export const App: React.FC = () => {
             path="/login"
             //if there is a user, navigate to the home page. if not, go to login page.
             element={user ? <Navigate to="/" /> : <LoginPage />}
+          />
+
+          <Route
+            path='*'
+            element={<NotFound/>}
           />
         </Routes>
       </BrowserRouter>

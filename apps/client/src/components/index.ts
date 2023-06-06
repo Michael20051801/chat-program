@@ -4,3 +4,4 @@ export * from './new-chat-modal';
 export * from './new-chat-user';
 export * from './new-chat-user-list';
 export * from './name-bar';
+export * from './edit-user-modal';

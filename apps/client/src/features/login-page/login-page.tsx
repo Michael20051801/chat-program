@@ -38,7 +38,7 @@ export const LoginPage: React.FC = () => {
       // If there is an error, log it and set the error state to the error message.
       .catch((err) => {
         console.log(err);
-        setError(err.data.message);
+        setError(err.data);
       });
   };
 

@@ -1,0 +1,150 @@
+/* The general design of the modal in the NewChatModal component. */
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+  /* display: none; */
+  z-index: 2;
+}
+  
+/* Adds opacity when I'm entering the modal */
+.modalEnterDone {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+/* Removing the opacity from the modal */
+.modalExit {
+  opacity: 0;
+}
+
+/* The style of the modal content (body+header+footer) */
+.modalContent {
+  width: 30%;
+  height: 70%;
+  background-color: #fff;
+  transition: all 0.6s ease-in-out;
+  transform: translateY(-150px);
+}
+
+/* Applies transitions on the modal when entering it */
+.modalEnterDone .modalContent {
+  transform: translateY(0);
+}
+
+/* Applies transitions on the modal when exiting it */
+.modalExit .modalContent {
+  transition: all 1s ease-in-out;
+  transform: translateY(-300px);
+}
+
+/* The style of the header and the footer of the modal */
+.modalHeader,
+.modalFooter {
+  padding: 10px;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalTitle {
+  margin: 0;
+}
+
+/* The style of the modal body (user list). */
+.modalBody {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.password {
+  padding-top: 68px;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px solid #eee;
+  transition: 0.4s;
+}
+
+.password:hover {
+  /* text-decoration: underline; */
+  background-color: rgb(118, 105, 206);
+  color: white;
+  cursor: pointer;
+}
+
+.formPassword {
+  margin-top: -20px;
+  
+}
+
+.passwordSubmit {
+  margin-top: 30px;
+  width: 50%;
+  background-color: rgba(13, 13, 230, 0.874);
+  color: #ecf163;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 16px;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.description {
+  padding-top: 68px;
+  width: 100%;
+  height: 50%;
+  transition: 0.4s;
+}
+
+.description:hover {
+  /* text-decoration: underline; */
+  background-color: rgb(118, 105, 206);
+  color: white;
+  cursor: pointer;
+}
+
+.formDesc {
+  margin-top: -20px;
+}
+
+.descSubmit {
+  margin-top: 25px;
+  width: 50%;
+  background-color: rgba(13, 13, 230, 0.874);
+  color: #ecf163;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: medium;
+}
+
+/* The style of the close button in the modal */
+.closeButton:hover,
+.closeButton:focus {
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  padding-top: 15px;
+}

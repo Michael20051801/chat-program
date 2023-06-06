@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post} from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post} from '@nestjs/common';
 import { UserService } from './user.service';
 
 // Defining a controller, that its path name will be '/users'.
@@ -24,5 +24,15 @@ export class UserController {
   @Get('status')
   getStatus(@Body() userId: string) {
     return this.userService.getStatus(userId);
+  }
+
+  @Patch('desc')
+  changeDesc(@Body() body: {userId: string, description: string}){
+    return this.userService.changeDesc(body);
+  }
+
+  @Patch('password')
+  changePassword(@Body() body: {userId: string, currentPassword: string, newPassword: string}) {
+    return this.userService.changePassword(body);
   }
 }

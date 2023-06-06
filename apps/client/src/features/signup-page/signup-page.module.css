@@ -53,7 +53,7 @@ input::placeholder{
 .signupSubmit {
   margin-top: 5%;
   width: 50%;
-  background-color: rgba(17, 17, 219, 0.854);
+  background-color: rgba(13, 13, 230, 0.874);
   color: #ecf163;
   font-weight: bold;
   border: none;
@@ -61,12 +61,14 @@ input::placeholder{
   padding: 16px;
   cursor: pointer;
   font-size: medium;
+  user-select: none;
 }
 
 /* Changes the background color of the submit button
     when hovering over it. */
 .signupSubmit:hover {
   background-color: rgba(4, 4, 156, 0.854);
+  transition: 0.3s;
 }
 
 /* The style of the sentence that in the end of it

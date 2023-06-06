@@ -1,9 +1,6 @@
 /* The general design of the card container (message container+
     inpit field+padding) */
 .container {
-  background-color: aqua;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
   width: 80%;
   display: flex;
   flex-direction: column;

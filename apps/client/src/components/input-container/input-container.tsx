@@ -2,7 +2,10 @@ import React, { KeyboardEvent, useState, ChangeEvent } from 'react';
 import style from './input-container.module.css';
 import { useSelector } from 'react-redux';
 
-import { ReactComponent as PaperPlane } from '../../assets/paper-plane.svg';
+// import { ReactComponent as PaperPlane } from '../../assets/paper-plane.svg';
+// import PaperPlane from '../../assets/PaperPlaneBtn.png';
+// import { ReactComponent as PaperPlane } from '../../assets/send.svg'
+import { ReactComponent as PaperPlane } from '../../assets/send-fill.svg'
 import {
   RootState,
   useSendMessageMutation,
@@ -57,8 +60,8 @@ export const InputContainer: React.FC = () => {
     <div className={style.container}>
       {/* Creating an input field for writing a message */}
       <input
-        className={style.inputField}
         type="text"
+        className={style.inputField}
         placeholder={'Write something...'}
         value={content}
         onChange={handleChange}
@@ -67,6 +70,7 @@ export const InputContainer: React.FC = () => {
       
       {/* Creating a send button with a paper plane icon on it */}
       <button className={style.sendButton} onClick={handleClick}>
+        {/* <img src={PaperPlane} className={style.paperPlane} /> */}
         <PaperPlane className={style.paperPlane} />
       </button>
     </div>

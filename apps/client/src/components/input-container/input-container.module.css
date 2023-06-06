@@ -1,8 +1,7 @@
 /* The general design of the InputContainer component. */
 .container {
     width: 100%;
-    height: 12%;
-    /* padding: 0.5rem; */
+    height: 16.4%;
     background-color: beige;
     display: flex;
     flex-direction: row;
@@ -10,21 +9,23 @@
     justify-content: center;
     gap: 0.5rem;
     position: relative;
+    padding-bottom: 2%;
 }
 
 /* The design of the green, send button on the bottom right side of the screen. */
 .sendButton {
     display: flex;
-    flex-basis: 4.8%;
+    flex-basis: 5.3%;
     width: 5.5%;
     max-width: 100%;
     max-height: 100%;
     border-radius: 50%;
     border: none;
-    background-color: green;
+    background-color: #fd9300;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin-top: 2%;
 }
 
 
@@ -34,22 +35,47 @@
     padding-bottom: 100%;
 }
 
+.sendButton:hover {
+    transform: scale(1.14);
+    transition: 0.4s;
+    background-color: black;
+}
+
+
+
+/* The design of the paper plane icon on the green send button */
+.paperPlane{
+    margin-top: 8%;
+    margin-right: 8.5%;
+    width: 70%;
+    height: 70%;
+    color: white;
+}
+
+.paperPlane:hover {
+    color: #fd9300;
+    transition: 0.4s;
+}
+
 /* The design of the input field */
 .inputField {
-    /* position: absolute; */
+    font-size: larger;
     display: flex; 
-    align-items: center; 
     align-self: center; 
     background-color: #FFFFFF; 
-    height: 200%;
-    max-height: 100%; 
-    width: 100%; 
-    padding: 1rem;
-    font-size: large;
+    height: 80%;
+    width: 100%;
     unicode-bidi: plaintext;
     text-align: start;
-    overflow: hidden; 
-    padding-bottom: 40px;
+    overflow: hidden;
+
+    /* vertical-align: auto; */
+    /* margin-top: -109px; */
+}
+
+.inputField:active {
+    background-color: aquamarine;
+    transition: 0.35s;
 }
 
 /* The design of the placeholder inside of the input field */
@@ -60,8 +86,3 @@
     user-select: none;
 }
 
-/* The design of the paper plane icon on the green send button */
-.paperPlane{
-    width: 70%;
-    height: 70%;
-}
