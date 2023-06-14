@@ -52,7 +52,6 @@ export const NewChatUserList: React.FC<Props> = ({ onClose }: Props) => {
       {data?.map((contact, index) =>
       // Show all the contacts except the current one.
         currentUser.email !== contact.email ? (
-          
           <div
             key={index}
             className={style.user}

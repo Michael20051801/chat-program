@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import style from './login-page.module.css';
-import { RootState, saveUser, setLoggedIn, useLoginMutation, useSetStatusMutation } from '../../store';
+import { RootState, saveUser, setLoggedIn, useLoginMutation } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -11,8 +11,6 @@ export const LoginPage: React.FC = () => {
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
-  const [setStatus] = useSetStatusMutation();
-  const isLoggedIn = useSelector((state: RootState) => state.setLoggedIn);
 
   // If the user clicks on the submit button ('Continue'), don't actually submit
   //  the form, but instead create an object of email and password which are the

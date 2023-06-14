@@ -25,26 +25,6 @@ export class UserService {
     return users;
   }
 
-  async setStatus(body: { userId: string; status: boolean }) {
-    await this.prisma.user.update({
-      where: {
-        id: body.userId,
-      },
-      data: {
-        status: body.status,
-      },
-    });
-  }
-
-  async getStatus(userId: string) {
-    const user = await this.prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    });
-    return user.status;
-  }
-
   async changeDesc(body: { userId: string; description: string }) {
     await this.prisma.user.update({
       where: {

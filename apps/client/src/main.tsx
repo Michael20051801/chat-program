@@ -17,7 +17,7 @@ root.render(
   <StrictMode>
     {/* Providing the store (global state) to the app. */}
     <Provider store={store}>
-      {/* Returning the App module, there are all the code */}
+      {/* Returning the App module, there there is all the code */}
       <App />
     </Provider>
   </StrictMode>

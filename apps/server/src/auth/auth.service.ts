@@ -35,7 +35,6 @@ export class AuthService {
           email: true,
           id: true,
           userName: true,
-          status: false,
           hash: false,
         },
       });
@@ -73,7 +72,6 @@ export class AuthService {
         email: true,
         id: true,
         userName: true,
-        status: false,
         hash: true,
       },
     });
@@ -102,16 +100,5 @@ export class AuthService {
 
     // returns the found user.
     return user;
-  }
-
-  async logout(userId: string) {
-    await this.prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        status: false,
-      },
-    })
   }
 }

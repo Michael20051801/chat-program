@@ -17,8 +17,6 @@ model User {
   email    String  @unique @db.Text
   hash     String  @db.Text
   userName String  @db.Text
-  status Boolean @default(false) @db.Boolean
-
   description String? @db.Text
 
   // The sent and received messages every user has.

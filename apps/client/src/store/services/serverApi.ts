@@ -5,6 +5,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 //    referring to the cpecified url, which is the url of the server.
 // The enpoints will be specified later (code splitting).
 export const serverApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.190.158:3333' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.156.158:3333' }),
   endpoints: () => ({}),
 });

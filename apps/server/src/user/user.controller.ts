@@ -16,16 +16,6 @@ export class UserController {
     return this.userService.getContacts();
   }
 
-  @Post('status')
-  setStatus(@Body() body: {userId: string, status: boolean}) {
-    return this.userService.setStatus(body);
-  }
-
-  @Get('status')
-  getStatus(@Body() userId: string) {
-    return this.userService.getStatus(userId);
-  }
-
   @Patch('desc')
   changeDesc(@Body() body: {userId: string, description: string}){
     return this.userService.changeDesc(body);

@@ -43,9 +43,4 @@ export class AuthController {
     //  parameter it got from the outer function.
     return this.authService.login(dto);
   }
-
-  @Post('logout') 
-  logout(@Body() userId: string) {
-    return this.authService.logout(userId);
-  }
 }

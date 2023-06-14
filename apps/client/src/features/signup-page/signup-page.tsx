@@ -3,7 +3,6 @@ import style from './signup-page.module.css';
 import {
   saveUser,
   setLoggedIn,
-  useSetStatusMutation,
   useSignupMutation,
 } from '../../store';
 import { useDispatch } from 'react-redux';
@@ -17,7 +16,6 @@ export const SignupPage: React.FC = () => {
   const [signup] = useSignupMutation();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
-  const [setStatus] = useSetStatusMutation();
 
   // If the user clicks on the submit button ('Continue'), don't actually submit
   //  the form, but instead create an object of email, password and userName which 

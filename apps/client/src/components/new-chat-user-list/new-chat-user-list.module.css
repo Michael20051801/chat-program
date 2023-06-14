@@ -28,3 +28,8 @@
     padding-top: 23px;
     cursor: pointer;
 }
+
+.user:hover {
+    background-color: rgb(199, 199, 199);
+    transition: 0.5s;
+}
